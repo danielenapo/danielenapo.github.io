@@ -16,18 +16,12 @@
 		<option value="2"> 2/4 </option>
 	</select><br>
 	numero di battute:
-	<select id="battute">
-		<option value="1"> 1 </option>
-		<option value="2"> 2 </option>
-		<option value="3"> 3 </option>
-		<option value="4"> 4 </option>
-		<option value="5"> 5 </option>
-	</select><br>
+	<input type="number" id="battute" value="1" min="1" max="30" style="width:40px"><br>
 	scala:
 	<select id="scala">
-		<option value="maggiore"> 1 </option>
-		<option value="minore"> 2 </option>
-		<option value="blues"> 3 </option>
+		<option value="maggiore"> maggiore </option>
+		<option value="minore"> minore </option>
+		<option value="blues"> blues </option>
 	</select><br>
 	prima nota (tonalita):
 	<select id="ton">
@@ -37,8 +31,6 @@
 	<br>
 	<br><br>
 	<button onClick="avvio()">genera</button>
-	<input type="reset">reimposta</input>
-	<button>RAndOmIZe</button>
 	<br>
 		<div id="generato"></div>
 </body>
