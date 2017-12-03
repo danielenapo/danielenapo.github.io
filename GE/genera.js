@@ -1,67 +1,56 @@
-var cont=[];
+//Musedia   Copyright (C)   2017   Daniele Napolitano
+
+var scala=[];
 		function avvio()
 		{
-			//output
-			output=document.getElementById("generato");
-			//input tempo
-			var tempo=document.getElementById("tempo").value;
-			//input n°battute
-			var battute = document.getElementById('battute').value;
-			//input tipo di scala
-			var scala_value = document.getElementsByName('scala');
-			var scala;
-			for(var i = 0; i < scala_value.length; i++)
+			output=document.getElementById("generato");//output
+			var tempo=document.getElementById("tempo").value; //tempo  (4/4, 3/4,...)
+			var battute = document.getElementById("battute").value;//n°battute
+			var scala_value = document.getElementById("scala").value;//tipo di scala(maggiore, minore,...)
+			var tonalita=document.getElementById("ton").value;//tonalità(do, re....)
+			//calcolo delle scale in base alla tonalità
+			switch(tonalita)
 			{
-				if(scala_value[i].checked){
-					scala = scala_value[i].value;
-				}
-			}
-			//tonalità
-			var ton=document.getElementById("ton").value;
-			//calcolo delle note
-			switch(ton)
-			{
-				case "C":
+				case "C"://do
 					{
-						if(scala=="maggiore")
-							cont=["DO", "RE", "MI", "FA", "SOL", "LA", "SI"];
-						else if(scala=="minore")
-							cont=["DO", "RE", "MIb", "FA", "SOL", "LAb", "SIb"];
-						else if(scala=="blues")
-							cont=["DO" , "MIb" , "FA" , "SOLb" , "SOL" , "SIb" , "DO" ];
+						if(scala_value=="maggiore")
+							scala=["DO", "RE", "MI", "FA", "SOL", "LA", "SI"];
+						else if(scala_value=="minore")
+							scala=["DO", "RE", "MIb", "FA", "SOL", "LAb", "SIb"];
+						else if(scala_value=="blues")
+							scala=["DO" , "MIb" , "FA" , "SOLb" , "SOL" , "SIb" , "DO" ];
 					}
 					break;
 
-				case "D":
+				case "D"://re
 					{
-						if(scala=="maggiore")
-							cont=["RE", "MI", "FA#", "SOL", "LA", "SI", "DO#", "RE"];
-						else if(scala=="minore")
-							cont=["RE", "MI", "FA", "SOL", "LA", "SIb", "DO", "RE"];
-						else if(scala=="blues")
-							cont=["RE", "FA#", "SOL", "LAb", "LA", "DO", "RE"];
+						if(scala_value=="maggiore")
+							scala=["RE", "MI", "FA#", "SOL", "LA", "SI", "DO#", "RE"];
+						else if(scala_value=="minore")
+							scala=["RE", "MI", "FA", "SOL", "LA", "SIb", "DO", "RE"];
+						else if(scala_value=="blues")
+							scala=["RE", "FA#", "SOL", "LAb", "LA", "DO", "RE"];
 					}
 					break;
 			}
 			//output
 			progressione=[];
 			tempi=[];
-			var lead= new nota(cont, progressione, ton, battute, tempo, tempi);
+			var lead= new nota(scala, progressione, tonalita, battute, tempo, tempi);
 			tempi=lead.generaTempo();
 			progressione=lead.prossima();
 			output.innerHTML+=visualizza(progressione, tempi);
 		}
-
-
+//**********************************************************************************************************************************
 		function nota(note,progressione, prec, battute, max, tempi) //oggetto
 		{
 			this.tempi=tempi;//tempi generati
 			this.max=max;	//max è il tempo, chiamato così per non confondere nella funzione generaTempo()
 			this.battute=battute
-			this.note=note;//note possibili(scala)
+			this.note=note;//note possibili(scala_value)
 			this.progressione=progressione;//note generate
 			this.prec=prec;
-
+//****************************
 			this.generaTempo=function()
 			{
 				valori=[0.5,1,2];		//valori possibili(in ordine croma, semiminima, minima)
@@ -84,8 +73,7 @@ var cont=[];
 				}
 				return tempi;
 			}
-
-			//metodo che calcola la progressione di accordi
+//****************************
 			this.prossima =function()
 			{
 				for(var i=0; i<tempi.length; i++)
@@ -96,27 +84,27 @@ var cont=[];
 					return progressione;
 			}
 		}
-
-		function visualizza(nota, tempo)
+//***************************************************************************************
+//EXTRA FUNCTIONS
+		function visualizza(nota, tempo)//visualizza in una tabella, solo per ragioni di testing
 		{
 			var out="<table>";
-			var apertura="<tr><td>";
-			var chiusura="</td></tr>";
 			for (var i=0; i<tempo.length;i++)
 			{
-				out+=apertura+nota[i]+"</td><td>";
-				out+=tempo[i]+chiusura;
+				out+="<tr><td>"+nota[i]+"</td><td>";
+				out+=tempo[i]+"</td></tr>";
 
 			}
 			out+="</table>";
 				return out;
 		}
-
-		function Probabilita(percentuale)
+/*
+		function Probabilita(percentuale)	//calcola una bool data una percentuale di probabilità
 		{
 			var random=Math.floor((Math.random()*10)+1);
-			if (random<=5)
+			if (random<=percentuale)
 				return true;
 			else
 				return false;
 		}
+*/
