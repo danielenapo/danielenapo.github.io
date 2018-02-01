@@ -21,9 +21,9 @@ function mossa(pos)
 //reset in casella statistiche e messaggi a sinistra dello schermo
 	document.getElementById("faccia").innerHTML="(• ‿ •)";
 	if(colturno=='n')
-		document.getElementById("messaggi").innerHTML="tocca ai neri";
+		document.getElementById("messaggi").innerHTML="tocca ai<br> neri";
 	else
-		document.getElementById("messaggi").innerHTML="tocca ai bianchi";
+		document.getElementById("messaggi").innerHTML="tocca ai<br> bianchi";
 
 /*_________________________PRIMO CLICK___________________________________*/
 
@@ -37,7 +37,7 @@ function mossa(pos)
 		//controllo se la selezione corrisponde al colore della mossa
 		if(colp!=colturno)
 		{
-			document.getElementById("messaggi").innerHTML="mossa non valida...";
+			document.getElementById("messaggi").innerHTML="mossa non<br> valida...";
 			document.getElementById('faccia').innerHTML="(ಠ╭╮ಠ)";
 				return;//esce dalla funzione in caso di selezione colore sbagliato
 		}
@@ -286,18 +286,18 @@ function mossa(pos)
 			//indica a chi tocca il turno
 			if(colturno=='b')
 			{
-				document.getElementById("messaggi").innerHTML="tocca ai neri";
+				document.getElementById("messaggi").innerHTML="tocca ai<br> neri";
 				colturno='n';
 			}
 			else
 			{
-				document.getElementById("messaggi").innerHTML="tocca ai bianchi";
+				document.getElementById("messaggi").innerHTML="tocca ai<br> bianchi";
 				colturno='b';
 			}
 
 		}
 		else
-			document.getElementById("messaggi").innerHTML="mossa non valida!!!";
+			document.getElementById("messaggi").innerHTML="mossa non<br> valida!!!";
 
 		//deseleziona tutto
         for(var i=1;i<9; i++)
@@ -338,12 +338,12 @@ function Timer()
 		timersec=300;
 		if(colturno=='b')
 		{
-			document.getElementById("messaggi").innerHTML="tocca ai neri";
+			document.getElementById("messaggi").innerHTML="tocca ai<br> neri";
 			colturno='n';			
 		}
 		else
 		{
-			document.getElementById("messaggi").innerHTML="tocca ai bianchi";
+			document.getElementById("messaggi").innerHTML="tocca ai<br> bianchi";
 			colturno='b';
 		}
 	}
