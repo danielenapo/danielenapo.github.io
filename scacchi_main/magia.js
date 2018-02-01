@@ -11,7 +11,7 @@ vecchiaPos="";//stringa di appoggio che salva la posizione del click precedente
 mosse=0;
 colturno='b';
 document.getElementById("mosse").innerHTML="mossa numero: "+turno+"";
-document.getElementById("messaggi").innerHTML="tocca ai bianchi";
+document.getElementById("messaggi").innerHTML="tocca ai<br> bianchi";
 document.getElementById("faccia").innerHTML="(• ‿ •)";
 setInterval(Timer,1000);
 
