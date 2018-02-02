@@ -52,7 +52,7 @@ td{border: solid black 2px;}
 			width:70px;
 			height:70px;
 }
-.vintobg{background-image: url("bg_vittoria.gif");
+.vintobg{background-image: url("imm/bg_vittoria.gif");
 		background-size: cover;}
 #vintoscreen{
 		position:absolute;
