@@ -389,14 +389,14 @@ function Timer()
 function controlloArrocco(colp)
 {
 	
-	if(colp=="n" && arrocco[0]==true) //nero
+	if(colp=="n" && arrocco[0]==true && document.getElementById(vecchiaPos)=='<img src="imm/re_'+colp+'.png">') //nero
 	{
 		if(arrocco[1]==true && document.getElementById("12").innerHTML=='<img src="imm/vuota.png">' && document.getElementById("13").innerHTML=='<img src="imm/vuota.png">'  && document.getElementById("14").innerHTML=='<img src="imm/vuota.png">')//controllo sinistra libera
 			document.getElementById("13").className="selezionato"; isArrocco=true;
 		if(arrocco[2]==true && document.getElementById("16").innerHTML=='<img src="imm/vuota.png">' && document.getElementById("17").innerHTML=='<img src="imm/vuota.png">')//controllo destra libera
 			document.getElementById("17").className="selezionato"; isArrocco=true;
 	}
-	else if(colp=="b" && arrocco[3]==true) //bianco
+	else if(colp=="b" && arrocco[3]==true && document.getElementById(vecchiaPos)=='<img src="imm/re_'+colp+'.png">') //bianco
 	{
 		if(arrocco[4]==true && document.getElementById("82").innerHTML=='<img src="imm/vuota.png">' && document.getElementById("83").innerHTML=='<img src="imm/vuota.png">'  && document.getElementById("84").innerHTML=='<img src="imm/vuota.png">')//controllo sinistra libera
 			document.getElementById("83").className="selezionato"; isArrocco=true;

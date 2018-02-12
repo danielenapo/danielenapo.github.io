@@ -86,25 +86,25 @@ function mossa(pos)
 			{
 				document.getElementById("14").innerHTML='<img src="imm/torre_n.png">'; //assegna alla nuova casella la pedina
 				document.getElementById("11").innerHTML="<img src='imm/vuota.png'>"; //cancella la pedina nella vecchia casella
-				arrocco[0]=false;
+				arrocco[0,1,2]=false;
 			}
 			else if(pos=="17" && isArrocco==true)//nero dx
 			{
 				document.getElementById("16").innerHTML='<img src="imm/torre_n.png">'; //assegna alla nuova casella la pedina
 				document.getElementById("18").innerHTML="<img src='imm/vuota.png'>"; //cancella la pedina nella vecchia casella
-				arrocco[0]=false;
+				arrocco[0,1,2]=false;
 			}
 			else if(pos=="83" && isArrocco==true)//bianco sx
 			{
 				document.getElementById("84").innerHTML='<img src="imm/torre_b.png">'; //assegna alla nuova casella la pedina
 				document.getElementById("81").innerHTML="<img src='imm/vuota.png'>"; //cancella la pedina nella vecchia casella
-				arrocco[3]=false;
+				arrocco[3,4,5]=false;
 			}
 			else if(pos=="87" && isArrocco==true)//bianco dx
 			{
 				document.getElementById("86").innerHTML='<img src="imm/torre_b.png">'; //assegna alla nuova casella la pedina
 				document.getElementById("88").innerHTML="<img src='imm/vuota.png'>"; //cancella la pedina nella vecchia casella
-				arrocco[3]=false;
+				arrocco[3,4,5]=false;
 			}
 				
 			
@@ -447,17 +447,17 @@ function Timer()
 }
 
 /*_______________ CONTROLLO POSSIBILITA' ARROCCO ___________________*/
-function controlloArrocco(colp)
+function controlloArrocco(colp, vecchiaPos)
 {
 	
-	if(colp=="n" && arrocco[0]==true) //nero
+	if(colp=="n" && arrocco[0]==true && document.getElementById(vecchiaPos)=='<img src="imm/re_'+colp+'.png">') //nero
 	{
 		if(arrocco[1]==true && document.getElementById("12").innerHTML=='<img src="imm/vuota.png">' && document.getElementById("13").innerHTML=='<img src="imm/vuota.png">'  && document.getElementById("14").innerHTML=='<img src="imm/vuota.png">')//controllo sinistra libera
 			document.getElementById("13").className="selezionato"; isArrocco=true;
 		if(arrocco[2]==true && document.getElementById("16").innerHTML=='<img src="imm/vuota.png">' && document.getElementById("17").innerHTML=='<img src="imm/vuota.png">')//controllo destra libera
 			document.getElementById("17").className="selezionato"; isArrocco=true;
 	}
-	else if(colp=="b" && arrocco[3]==true) //bianco
+	else if(colp=="b" && arrocco[3]==true && document.getElementById(vecchiaPos)=='<img src="imm/re_'+colp+'.png">') //bianco
 	{
 		if(arrocco[4]==true && document.getElementById("82").innerHTML=='<img src="imm/vuota.png">' && document.getElementById("83").innerHTML=='<img src="imm/vuota.png">'  && document.getElementById("84").innerHTML=='<img src="imm/vuota.png">')//controllo sinistra libera
 			document.getElementById("83").className="selezionato"; isArrocco=true;
@@ -567,6 +567,8 @@ function trasforma(pos,selected)
 	document.getElementById(pos).innerHTML="<img src='imm/"+selected+".png'>";//trasforma il pedone nella pedina selezionata
 	document.getElementById("transPedone").innerHTML='';//toglie il menu di selezione delle pedine per la trasformazione
 	sceltaTrans=false;//sblocca il gioco
+	pos=randomPos();
+	mossa(pos);
 }
 /* _____________ IN CASO DI VITTORIA __________________________*/
 function fine(coloreVinto)
@@ -583,6 +585,4 @@ function fine(coloreVinto)
 	{
 		document.getElementById("vintoscreen").innerHTML="<p>Hanno vinto i BIANCHI!</p>";
 	}
-	//document.getElementById("stats").style.margin=" 50px auto;";
-	//document.getElementById("stats").style.position=" relative;";
 }
