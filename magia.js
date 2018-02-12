@@ -2,6 +2,7 @@
 mangiate_b=new Array();
 mangiate_n=new Array();
 setInterval(ciglia,5000);//sbatte le ciglia della faccina
+var sceltaTrans=false;
 timersec=300;
 turno=0;
 cont=0; //variabile che riporta il click
@@ -36,7 +37,7 @@ function mossa(pos)
 		var lenstr=primo.length;
 		var colp=primo.charAt(lenstr-7);
 		//controllo se la selezione corrisponde al colore della mossa
-		if(colp!=colturno)
+		if(colp!=colturno || sceltaTrans!=false)
 		{
 			document.getElementById("messaggi").innerHTML="mossa non valida...";
 			document.getElementById('faccia').innerHTML="(ಠ╭╮ಠ)";
@@ -53,6 +54,7 @@ function mossa(pos)
 
 	else
 	{
+		var collturno=colturno;
 		//SE LA MOSSA E' VALIDA
 		if(document.getElementById(pos).className=="selezionato"&&pos!=vecchiaPos)
 		{
@@ -60,6 +62,7 @@ function mossa(pos)
 			if(document.getElementById(pos).innerHTML!='<img src="imm/vuota.png">')
 			{
 				document.getElementById('faccia').innerHTML="(^ ‿ ^)";
+				//salvo la pedina mangiata in un array
 				if(colturno=='b')//se era nera
 					mangiate_n.push(document.getElementById(pos).innerHTML);
 				else	//se era bianca
@@ -132,14 +135,20 @@ function mossa(pos)
 			document.getElementById("messaggi").innerHTML="mossa non valida!!!";
 		
 		Deseleziona();//deseleziona tutto
-		visualEaten();//visualizza le pedine mangiate	
+		visualEaten();//visualizza le pedine mangiate
+		Scacco(collturno);
+		if(collturno=="b")
+			Scacco("n");
+		else	
+			Scacco("b");
 	}
 	cont++;
 }
 
 /*___________ MOSTRA LE CASELLE IN CUI SI PUO' ANDARE ____________*/
-function Seleziona(pimo, colp, colturno, pos)
+function Seleziona(primo, colp, colturno, pos)
 {
+	//alert(primo+","+colp+","+colturno+","+pos)
 	switch(primo)
 	{
 		case '<img src="imm/pedone_n.png">': //pedone nero
@@ -148,7 +157,8 @@ function Seleziona(pimo, colp, colturno, pos)
 					var lenstr2=(document.getElementById(parseInt(pos)+9).innerHTML).length;
 					var col2=(document.getElementById(parseInt(pos)+9).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 					//controllo non mangi pedina amica
-					if(colp!=col2)
+					if(colturno!=col2)
+						
 						document.getElementById(parseInt(pos)+9).className="selezionato";
 			}
 			if(document.getElementById(parseInt(pos)+11)!=null && document.getElementById(parseInt(pos)+11).innerHTML!='<img src="imm/vuota.png">')//diagonale destra
@@ -156,7 +166,7 @@ function Seleziona(pimo, colp, colturno, pos)
 				var lenstr2=(document.getElementById(parseInt(pos)+11).innerHTML).length;
 				var col2=(document.getElementById(parseInt(pos)+11).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 				//controllo non mangi pedina amica
-				if(colp!=col2)
+				if(colturno!=col2)
 					document.getElementById(parseInt(pos)+11).className="selezionato";
 			}
 
@@ -174,7 +184,7 @@ function Seleziona(pimo, colp, colturno, pos)
 				var lenstr2=(document.getElementById(parseInt(pos)-9).innerHTML).length;
 				var col2=(document.getElementById(parseInt(pos)-9).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 				//controllo non mangi pedina amica
-				if(colp!=col2)
+				if(colturno!=col2)
 					document.getElementById(parseInt(pos)-9).className="selezionato";
 			}
 
@@ -183,7 +193,7 @@ function Seleziona(pimo, colp, colturno, pos)
 				var lenstr2=(document.getElementById(parseInt(pos)-11).innerHTML).length;
 				var col2=(document.getElementById(parseInt(pos)-11).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 				//controllo non mangi pedina amica
-				if(colp!=col2)
+				if(colturno!=col2)
 					document.getElementById(parseInt(pos)-11).className="selezionato";
 			}
 
@@ -195,8 +205,7 @@ function Seleziona(pimo, colp, colturno, pos)
 			}
 		break;
 		//torri nere e bianche
-		case '<img src="imm/torre_n.png">':
-		case '<img src="imm/torre_b.png">':
+		case '<img src="imm/torre_'+colturno+'.png">':
 		  var i=0;
 		  var sum=[10, 1, -1, -10];
 		  for(var k=0; k<4; k++)
@@ -204,15 +213,16 @@ function Seleziona(pimo, colp, colturno, pos)
 			for(var j=1; j<8; j++)
 			{
 			  i+=sum[k];
-			  if(document.getElementById(parseInt(pos+i))!=null && document.getElementById(parseInt(pos+i)).innerHTML=='<img src="imm/vuota.png">')
-				document.getElementById(parseInt(pos+i)).className="selezionato";
-			  else if(document.getElementById(parseInt(pos+i))!=null)
+			  sposta=(parseInt(pos)+i);
+			  if(document.getElementById(sposta)!=null && document.getElementById(sposta).innerHTML=='<img src="imm/vuota.png">')
+				document.getElementById(sposta).className="selezionato";
+			  else if(document.getElementById(sposta)!=null)
 			  {
-				var lenstr2=(document.getElementById(parseInt(pos+i)).innerHTML).length;
-				var col2=(document.getElementById(parseInt(pos+i)).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
+				var lenstr2=(document.getElementById(sposta).innerHTML).length;
+				var col2=(document.getElementById(sposta).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 				//controllo non mangi pedina amica
-				if(colp!=col2)
-					document.getElementById(parseInt(pos+i)).className="selezionato";
+				if(colturno!=col2)
+					document.getElementById(sposta).className="selezionato";
 				break;
 			  }
 			  else
@@ -223,8 +233,7 @@ function Seleziona(pimo, colp, colturno, pos)
 		  break;
 
 			//alfieri neri e bianchi
-			case '<img src="imm/alfiere_n.png">':
-			case '<img src="imm/alfiere_b.png">':
+			case '<img src="imm/alfiere_'+colturno+'.png">':
 			  var i=0;
 			  var sum=[11, 9, -9, -11];
 			  for(var k=0; k<4; k++)
@@ -232,15 +241,16 @@ function Seleziona(pimo, colp, colturno, pos)
 				for(var j=1; j<8; j++)
 				{
 					i+=sum[k];
-					if(document.getElementById(parseInt(pos+i))!=null&&document.getElementById(parseInt(pos+i)).innerHTML=='<img src="imm/vuota.png">')
-						document.getElementById(parseInt(pos+i)).className="selezionato";
-						else if(document.getElementById(parseInt(pos+i))!=null)
+					sposta=(parseInt(pos)+i);
+					if(document.getElementById(sposta)!=null&&document.getElementById(sposta).innerHTML=='<img src="imm/vuota.png">')
+						document.getElementById(sposta).className="selezionato";
+						else if(document.getElementById(sposta)!=null)
 					{
-						var lenstr2=(document.getElementById(parseInt(pos+i)).innerHTML).length;
-						var col2=(document.getElementById(parseInt(pos+i)).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
+						var lenstr2=(document.getElementById(sposta).innerHTML).length;
+						var col2=(document.getElementById(sposta).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 						//controllo non mangi pedina amica
-						if(colp!=col2)
-							document.getElementById(parseInt(pos+i)).className="selezionato";
+						if(colturno!=col2)
+							document.getElementById(sposta).className="selezionato";
 						break;
 					}
 					else
@@ -250,8 +260,7 @@ function Seleziona(pimo, colp, colturno, pos)
 			}
 			break;
 			//regine nere e bianche
-			case '<img src="imm/regina_n.png">':
-			case '<img src="imm/regina_b.png">':
+			case '<img src="imm/regina_'+colturno+'.png">':
 			var sum=[10, 1, -1, -10, 11, 9, -9, -11];
 			var i=0;
 			for(var k=0; k<8; k++)
@@ -259,15 +268,16 @@ function Seleziona(pimo, colp, colturno, pos)
 				for(var j=0; j<8; j++)
 				{
 					i+=sum[k];
-					if(document.getElementById(parseInt(pos+i))!=null && document.getElementById(parseInt(pos+i)).innerHTML=='<img src="imm/vuota.png">')
-						document.getElementById(parseInt(pos+i)).className="selezionato";
-					else if(document.getElementById(parseInt(pos+i))!=null)
+					sposta=(parseInt(pos)+i);
+					if(document.getElementById(sposta)!=null && document.getElementById(sposta).innerHTML=='<img src="imm/vuota.png">')
+						document.getElementById(sposta).className="selezionato";
+					else if(document.getElementById(sposta)!=null)
 					{
-						var lenstr2=(document.getElementById(parseInt(pos+i)).innerHTML).length;
-						var col2=(document.getElementById(parseInt(pos+i)).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
+						var lenstr2=(document.getElementById(sposta).innerHTML).length;
+						var col2=(document.getElementById(sposta).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 						//controllo non mangi pedina amica
-						if(colp!=col2)
-							document.getElementById(parseInt(pos+i)).className="selezionato";
+						if(colturno!=col2)
+							document.getElementById(sposta).className="selezionato";
 						break;
 					}
 					else
@@ -277,8 +287,7 @@ function Seleziona(pimo, colp, colturno, pos)
 			}
 			break;
 			//re neri e bianchi
-			case '<img src="imm/re_n.png">':
-			case '<img src="imm/re_b.png">':
+			case '<img src="imm/re_'+colturno+'.png">':
 			controlloArrocco(colp);
 			var sum=[10, 1, -1, -10, 11, 9, -9, -11];
 			var i=0;
@@ -287,21 +296,21 @@ function Seleziona(pimo, colp, colturno, pos)
 				for(var j=0; j<8; j++)
 				{
 					i=sum[k];
-					if(document.getElementById(parseInt(pos+i))!=null)
+					sposta=(parseInt(pos)+i);
+					if(document.getElementById(sposta)!=null)
 					{
-						var lenstr2=(document.getElementById(parseInt(pos+i)).innerHTML).length;
-						var col2=(document.getElementById(parseInt(pos+i)).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
+						var lenstr2=(document.getElementById(sposta).innerHTML).length;
+						var col2=(document.getElementById(sposta).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 						//controllo non mangi pedina amica
-						if(colp!=col2)
-							document.getElementById(parseInt(pos+i)).className="selezionato";
+						if(colturno!=col2)
+							document.getElementById(sposta).className="selezionato";
 						break;
 					}
 				}
 			}
 			break;
 			//cavallo nero e bianco
-			case '<img src="imm/cavallo_n.png">':
-			case '<img src="imm/cavallo_b.png">':
+			case '<img src="imm/cavallo_'+colturno+'.png">':
 			sum=[10, -10, 1, -1];
 			sum1=[1, -1];
 			sum2=[10, -10];
@@ -314,14 +323,16 @@ function Seleziona(pimo, colp, colturno, pos)
 						z=sum1[j];
 					else
 						z=sum2[j];
-					if(document.getElementById(parseInt(pos+i+i+z))!=null)
+					sposta=(parseInt(pos)+i+i+z);
+					if(document.getElementById(sposta)!=null)
 					{
-						var lenstr2=(document.getElementById(parseInt(pos+i+i+z)).innerHTML).length;
-						var col2=(document.getElementById(parseInt(pos+i+i+z)).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
+						var lenstr2=(document.getElementById(sposta).innerHTML).length;
+						var col2=(document.getElementById(sposta).innerHTML).charAt(lenstr2-7);//colore pedina raggiungibile
 						//controllo non mangi pedina amica
-						if(colp!=col2)
-							document.getElementById(parseInt(pos+i+i+z)).className="selezionato";
+						if(colturno!=col2)
+							document.getElementById(sposta).className="selezionato";
 					}
+					
 
 				}
 			}
@@ -394,6 +405,71 @@ function controlloArrocco(colp)
 	}
 }
 
+/*____________ CONTROLLO SCACCO E SCACCO MATTO ____________*/
+function Scacco(collturno)
+{
+	var coloreAvversario;
+	if(collturno=="b")
+		coloreAvversario="n";
+	else
+		coloreAvversario="b";
+	var questaPedina="", questaPosizione="";
+	for(var i=1;i<9; i++)
+	{
+		for(var j=1; j<9; j++)
+		{
+			
+			questaPosizione=i+""+j;
+			questaPedina=document.getElementById(questaPosizione).innerHTML;
+			var lenstr2=questaPedina.length;
+			var questoColore=questaPedina.charAt(lenstr2-7);
+			if(questaPedina=='<img src="imm/re_'+coloreAvversario+'.png">')
+				var posReAvversario=questaPosizione;
+			if(questoColore==collturno)
+				Seleziona(questaPedina, collturno, collturno, questaPosizione);
+		}
+	}
+	if(document.getElementById(posReAvversario).className=="selezionato") //se il re è sotto scacco
+	{
+		document.getElementById("scacco"+coloreAvversario).innerHTML="IL RE E' SOTTO SCACCO!";
+		var controlla="",matto="", colControlla="";
+		var sum=[1,-1,10,-10,11,-11,9,-9];
+		for(var i=0;i<8; i++)
+		{
+			
+			var controlla=document.getElementById(parseInt(posReAvversario)+sum[i]);
+			if(controlla==null) 
+				matto++;
+			else
+			{
+				lenstr2=controlla.innerHTML.length;
+				colControlla=controlla.innerHTML.charAt(lenstr2-7);
+				if(controlla.className=="selezionato"||colControlla==coloreAvversario)
+					matto++;
+			}
+		}
+	}
+	else
+		document.getElementById("scacco"+coloreAvversario).innerHTML="";
+
+	if(document.getElementById("scacco"+coloreAvversario).innerHTML!="")
+	{
+		if(coloreAvversario=="b")
+		{
+			document.getElementById("scacco"+coloreAvversario).innerHTML="IL RE BIANCO E' SOTTO SCACCO!";
+			if(matto==8)
+				document.getElementById("scacco"+coloreAvversario).innerHTML="IL RE BIANCO E' SOTTO SCACCO MATTO!!!";
+		}
+		if(coloreAvversario=="n")
+		{
+			document.getElementById("scacco"+coloreAvversario).innerHTML="IL RE NERO E' SOTTO SCACCO!";
+			if(matto==8)
+				document.getElementById("scacco"+coloreAvversario).innerHTML="IL RE NERO E' SOTTO SCACCO MATTO!!!";
+		}
+	}
+	Deseleziona();
+}
+
 /*_______________ VISUALIZZA PEDINE MANGIATE _____________________*/
 function visualEaten()
 {
@@ -413,9 +489,15 @@ function controlloPedoneFinal(pos,primo)
 	torre_b="torre_b";torre_n="torre_n";cavallo_b="cavallo_b";cavallo_n="cavallo_n";alfiere_b="alfiere_b";alfiere_n="alfiere_n";//è necessario per passare i parametri alla funzione 'trasforma'
 	
 	if(pos>=11 && pos<=18 && primo=='<img src="imm/pedone_b.png">') //se il bianco è arrivato alla fine
+	{	
 		document.getElementById("transPedone").innerHTML='<p>Sostituisci il pedone con una di queste pedine</p><img class="transs" onClick="trasforma('+pos+','+torre_b+')" src="imm/torre_b.png"><br><img class="transs" onClick="trasforma('+pos+','+cavallo_b+')" src="imm/cavallo_b.png"><br><img class="transs" onClick="trasforma('+pos+','+alfiere_b+')" src="imm/alfiere_b.png">';	
+		sceltaTrans=true;//blocca il gioco finchè non scegli con cosa sostituire il pedone
+	}
 	if(pos>=81 && pos<=88 && primo=='<img src="imm/pedone_n.png">') //se il nero è arrivato alla fine
+	{	
 		document.getElementById("transPedone").innerHTML='<p>Sostituisci il pedone con una di queste pedine</p><img class="transs" onClick="trasforma('+pos+','+torre_n+')" src="imm/torre_n.png"><br><img class="transs" onClick="trasforma('+pos+','+cavallo_n+')" src="imm/cavallo_n.png"><br><img class="transs" onClick="trasforma('+pos+','+alfiere_n+')" src="imm/alfiere_n.png">';
+		sceltaTrans=true;//blocca il gioco finchè non scegli con cosa sostituire il pedone
+	}
 }
 
 /*___________ TRASFORMA IL PEDONE NELLA PEDINA SELEZIONATA _____________*/
@@ -423,6 +505,7 @@ function trasforma(pos,selected)
 {
 	document.getElementById(pos).innerHTML="<img src='imm/"+selected+".png'>";//trasforma il pedone nella pedina selezionata
 	document.getElementById("transPedone").innerHTML='';//toglie il menu di selezione delle pedine per la trasformazione
+	sceltaTrans=false;//sblocca il gioco
 }
 /* _____________ IN CASO DI VITTORIA __________________________*/
 function fine(coloreVinto)

@@ -40,11 +40,12 @@ td{border: solid black 2px;}
 
 
 .arancione{
-			background-color: rgb(210,140,70);
+			
+			background-color: rgb(255, 206, 158);
 			width:70px;
 			height:70px;}
 .marrone{
-			background-color: rgb(255, 206, 158);
+			background-color: rgb(210,140,70);
 			width:70px;
 			height:70px;}
 .selezionato{
@@ -63,4 +64,10 @@ td{border: solid black 2px;}
 		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 		color:white;
 	}
+	
+#eaten_n{
+	position:absolute;
+	top:10px;
+	left:80%;
+}
 

@@ -1,10 +1,55 @@
 <html>
 <head>
+	<title>Index</title>
+	<meta charset="UTF-8">
+	<link href="css.css" type="text/css" rel="stylesheet">
+	<style>
+		button{background-color:brown;
+				color:white;
+				height:30px;}
+	</style>
+	
 </head>
 <body>
-	
+	<h1>SCACCHI<h1>
+	<div id="faccia"></div>
+
+	<h2>Feature disponibili:</h2>
+	<ul>
+		<li>5 minuti a disposizione per turno</li>
+		<li>tutte le pedine funzionanti</li>
+		<li>cimitero delle pedine mangiate</li>
+		<li>arrocco</li>
+		<li>promozione pedoni a fine scacchiera</li>
+		<li>scacco</li>
+		<li>scacco matto "finto"
+		<br>(se il re è sotto scacco viene controllato se si può muovere in qualche direzione, se non è possibile è scacco matto)</li>
+		<li>"intelligenza" artificiale (si muove casualmente)</li>
+		<li>faccina che chiude gli occhi (inutile ma carina)</li>
+	</ul>
+	<button onClick="normal()">Gioca contro un umano</button>
+	<button onClick="ia()">Gioca contro il pc</button>
+	<p><i>Napolitano Daniele, Serafino Niccol&ograve </i></p>
 	<script>
-		window.location.replace("scacchi_main/index.html");
+		document.getElementById("faccia").innerHTML="(• ‿ •)";
+		setInterval(ciglia,5000);
+		
+		function ciglia()
+		{
+			document.getElementById("faccia").innerHTML="(- ‿ -)";
+			setTimeout(function () {document.getElementById("faccia").innerHTML="(• ‿ •)";}, 1000);	
+		}
+		
+		function normal()
+		{
+			window.location.replace("scacchi.html");
+		}
+		
+		function ia()
+		{
+			window.location.replace("scacchiVersusComputer.html");
+		}
+		
 	</script>
 </body>
 </html>
