@@ -1,10 +1,15 @@
 body{
 	background-color: rgb(255, 206, 158);
 	font-family: arial;
+	background-image:url("imm/bg.jpg");
+	background-size:cover;
 }
 #stats{
-				width:300px;
+				width:200px;
 				position: absolute;
+				border: 2px solid black;
+				background-color:white;
+				padding:10px;
 }
 
 #content{
@@ -53,7 +58,9 @@ td{border: solid black 2px;}
 			width:70px;
 			height:70px;
 }
-.vintobg{background-image: url("imm/bg_vittoria.gif");
+.vintobg{
+		background-color: white;
+		background-image: url("imm/bg_vittoria.gif");
 		background-size: cover;}
 #vintoscreen{
 		position:absolute;
@@ -61,13 +68,13 @@ td{border: solid black 2px;}
 		left:170px;
 		width:1000inch;
 		font-size:80pt;
-		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-		color:white;
+		
+		color:black;
 	}
 	
-#eaten_n{
+#eaten{
 	position:absolute;
-	top:10px;
+	top:5%;
 	left:80%;
 }
 

@@ -4,6 +4,10 @@
 	<meta charset="UTF-8">
 	<link href="css.css" type="text/css" rel="stylesheet">
 	<style>
+		body{background-color:white; 
+				width:80%;
+				heigth: 100%;
+				text-shadow: 2px 2px white;}
 		button{background-color:brown;
 				color:white;
 				height:30px;}
@@ -11,25 +15,30 @@
 	
 </head>
 <body>
-	<h1>SCACCHI<h1>
-	<div id="faccia"></div>
 
-	<h2>Feature disponibili:</h2>
-	<ul>
-		<li>5 minuti a disposizione per turno</li>
-		<li>tutte le pedine funzionanti</li>
-		<li>cimitero delle pedine mangiate</li>
-		<li>arrocco</li>
-		<li>promozione pedoni a fine scacchiera</li>
-		<li>scacco</li>
-		<li>scacco matto "finto"
-		<br>(se il re è sotto scacco viene controllato se si può muovere in qualche direzione, se non è possibile è scacco matto)</li>
-		<li>"intelligenza" artificiale (si muove casualmente) si consiglia di non testatre le funzioni su questa modalit&agrave </li>
-		<li>faccina che chiude gli occhi (inutile ma carina)</li>
-	</ul>
-	<button onClick="normal()">Gioca contro un umano</button>
-	<button onClick="ia()">Gioca contro il pc</button>
-	<p><i>Napolitano Daniele, Serafino Niccol&ograve </i></p>
+		<h1>SCACCHI<h1>
+		<div id="faccia"></div>
+	
+		<h2>Feature disponibili:</h2>
+		<b>
+		<ul>
+			<li>5 minuti a disposizione per turno</li>
+			<li>tutte le pedine funzionanti</li>
+			<li>cimitero delle pedine mangiate</li>
+			<li>arrocco</li>
+			<li>promozione pedoni a fine scacchiera</li>
+			<li>scacco</li>
+			<li>scacco matto "finto"
+			<br>(se il re è sotto scacco viene controllato se si può muovere in qualche direzione, se non è possibile è scacco matto)</li>
+			<li>"intelligenza" artificiale (si muove casualmente) si consiglia di non testatre le funzioni su questa modalit&agrave </li>
+			<li>faccina che chiude gli occhi (inutile ma carina)</li>
+		</ul>
+		</b>
+		<button onClick="normal()">Gioca contro un umano</button>
+		<button onClick="ia()">Gioca contro il pc</button>
+		<hr>
+		<p><i>Napolitano Daniele, Serafino Niccol&ograve </i></p>
+
 	<script>
 		document.getElementById("faccia").innerHTML="(• ‿ •)";
 		setInterval(ciglia,5000);

@@ -2,7 +2,7 @@
 
 mangiate_b=new Array();
 mangiate_n=new Array();
-setInterval(ciglia,5000);//sbatte le ciglia della faccina
+var eyes=setInterval(ciglia,5000);//sbatte le ciglia della faccina
 var sceltaTrans=false;
 timersec=300;
 turno=0;
@@ -547,16 +547,16 @@ function visualEaten()
 /*_____________ CONTROLLO E SELEZIONE PROMOZIONE PEDINE ______________*/
 function controlloPedoneFinal(pos,primo)
 {
-	torre_b="torre_b";torre_n="torre_n";cavallo_b="cavallo_b";cavallo_n="cavallo_n";alfiere_b="alfiere_b";alfiere_n="alfiere_n";//è necessario per passare i parametri alla funzione 'trasforma'
+	torre_b="torre_b";torre_n="torre_n";cavallo_b="cavallo_b";cavallo_n="cavallo_n";alfiere_b="alfiere_b";alfiere_n="alfiere_n";regina_b="regina_b";regina_n="regina_n";//è necessario per passare i parametri alla funzione 'trasforma'
 	
 	if(pos>=11 && pos<=18 && primo=='<img src="imm/pedone_b.png">') //se il bianco è arrivato alla fine
 	{	
-		document.getElementById("transPedone").innerHTML='<p>Sostituisci il pedone con una di queste pedine</p><img class="transs" onClick="trasforma('+pos+','+torre_b+')" src="imm/torre_b.png"><br><img class="transs" onClick="trasforma('+pos+','+cavallo_b+')" src="imm/cavallo_b.png"><br><img class="transs" onClick="trasforma('+pos+','+alfiere_b+')" src="imm/alfiere_b.png">';	
+		document.getElementById("transPedone").innerHTML='<p>Sostituisci il pedone con una di queste pedine</p><img class="transs" onClick="trasforma('+pos+','+torre_b+')" src="imm/torre_b.png"><br><img class="transs" onClick="trasforma('+pos+','+cavallo_b+')" src="imm/cavallo_b.png"><br><img class="transs" onClick="trasforma('+pos+','+alfiere_b+')" src="imm/alfiere_b.png"><br><img class="transs" onClick="trasforma('+pos+','+regina_b+')" src="imm/regina_b.png">';	
 		sceltaTrans=true;//blocca il gioco finchè non scegli con cosa sostituire il pedone
 	}
 	if(pos>=81 && pos<=88 && primo=='<img src="imm/pedone_n.png">') //se il nero è arrivato alla fine
 	{	
-		document.getElementById("transPedone").innerHTML='<p>Sostituisci il pedone con una di queste pedine</p><img class="transs" onClick="trasforma('+pos+','+torre_n+')" src="imm/torre_n.png"><br><img class="transs" onClick="trasforma('+pos+','+cavallo_n+')" src="imm/cavallo_n.png"><br><img class="transs" onClick="trasforma('+pos+','+alfiere_n+')" src="imm/alfiere_n.png">';
+		document.getElementById("transPedone").innerHTML='<p>Sostituisci il pedone con una di queste pedine</p><img class="transs" onClick="trasforma('+pos+','+torre_n+')" src="imm/torre_n.png"><br><img class="transs" onClick="trasforma('+pos+','+cavallo_n+')" src="imm/cavallo_n.png"><br><img class="transs" onClick="trasforma('+pos+','+alfiere_n+')" src="imm/alfiere_n.png"><br><img class="transs" onClick="trasforma('+pos+','+regina_n+')" src="imm/regina_n.png">';
 		sceltaTrans=true;//blocca il gioco finchè non scegli con cosa sostituire il pedone
 	}
 }
@@ -574,7 +574,7 @@ function trasforma(pos,selected)
 function fine(coloreVinto)
 {
 	
-	clearInterval();
+	clearInterval(eyes);
 	document.getElementById("body").innerHTML='<div id="stats"><h1 id="faccia">ヽ( ´ ∇ ｀ )ノ</h1></div><div id="vintoscreen"><div>';
 	document.getElementById("body").className="vintobg";
 	if(coloreVinto==true)
