@@ -1,6 +1,9 @@
 //##################INIZIALIZZAZIONI#####################
+storage=window.localStorage;
+storage.setItem("record", 0);
+
 function setup(){
-		$("#all").hide();
+	$("#sopra").hide();
 
 	//INIZIALIZZAZIONE CANVAS E FISICA
 	larghezzaCanvas=650;
@@ -8,16 +11,17 @@ function setup(){
 	createCanvas(larghezzaCanvas, lunghezzaCanvas);		//id="defaultCanvas0"
 	$("#defaultCanvas0").attr("id","finestra");	//rinomina l'id di default
 	frameRate(30);
-	gravity=1;
-	velocityX=10;
+	gravity=1.2;
+	velocityX=12;
 	difficultyLevel=0;
 	contaSprite=0;
 	velocitaSprite=3;
+	cuore=loadImage("img/player.png");
 
 	//INIZIALIZZAZIONI OGGETTO PERSONAGGIO
 	var velocityY=0, height=48, width=64, positionX=30;
 	positionYMin=lunghezzaCanvas-height-80;			// = grandezza canvas-altezza-80(per non attaccarsi al fondo)
-	player= new Player(true,velocityY, "img/player.png", height, width, "#FF0000", positionX, positionYMin, 100);
+	player= new Player(true,velocityY, "img/player.png", height, width, "#FF0000", positionX, positionYMin, 3);
 	player.sprites=loadImage("img/player.png");
 	spriteRun=32;
 	oldSpriteRun=0;
@@ -25,6 +29,9 @@ function setup(){
 	oldSpriteShootBug=3;
 	contaScrittaPowerup=0;
 	scrittaPowerup="";
+	contaCollisioni=60;
+	oldHealth=40;
+
 
 	//INIZIALIZZAZIONE NEMICO
 	enemy=new Enemy(false,"img/player.png",50, 84, "#0000FF", larghezzaCanvas, (lunghezzaCanvas-(lunghezzaCanvas/3)), 2 );
@@ -53,13 +60,17 @@ function setup(){
 	obstacleCounter=0;
 	obstacles=[];
 	colpi=[];
-	var possibleHeight=[50, 30];//due possibili altezze(alto e basso)
-	var possibleWidth=[30, 50];//due possibili larghezze(stretto e alto)
+	var possibleSpritesPositionX=[129, 173]
+	var possibleSpritesPositionY=[103, 94]
+	var possibleHeight=[22, 40];//due possibili altezze(alto e basso)
+	var possibleWidth=[70, 38];//due possibili larghezze(stretto e alto)
 	var type=Math.round(Math.random());	//sceglie che tipo di ostacolo generare
-	var positionYO=lunghezzaCanvas-possibleHeight[type]-80; //la posizione y si calcola come quella del giocatore
-	var obstacle= new Obstacle(possibleHeight[type], possibleWidth[type], "#00FFF0", 900, positionYO, 0); //istanzia un nuovo ostacolo
+	 positionYO=lunghezzaCanvas-possibleHeight[type]-80; //la posizione y si calcola come quella del giocatore
+	var obstacle= new Obstacle("img/player.png",possibleSpritesPositionX[type],possibleSpritesPositionY[type], possibleHeight[type], possibleWidth[type], 900, positionYO, 0); //istanzia un nuovo ostacolo
+	obstacle.sprites=loadImage("img/player.png");
 	obstacles.push(obstacle);
-	var obstacle= new Obstacle(possibleHeight[type], possibleWidth[type], "#00FFF0", larghezzaCanvas+1000, positionYO, 0); //istanzia un nuovo ostacolo
+	var obstacle= new Obstacle("img/player.png",possibleSpritesPositionX[type],possibleSpritesPositionY[type], possibleHeight[type], possibleWidth[type], larghezzaCanvas+1000, positionYO, 0); //istanzia un nuovo ostacolo
+	obstacle.sprites=loadImage("img/player.png");
 	obstacles.push(obstacle);
 
 	loop();
@@ -80,29 +91,36 @@ function draw(){
 
 	noStroke();
 
-	//STAMPA GIOCATOREgt
-	if(keyIsDown(RIGHT_ARROW)){ //se sta sparando
-		oldSpriteShootBug=0;
-		if(oldSpriteShoot<=40)
-			oldSpriteShoot=40;
-	}
-	else if(!keyIsDown(RIGHT_ARROW)){
-		oldSpriteShoot=3;
-		oldSpriteShootBug=0;
-	}
-
-	if(player.onGround==true){ //se sta correndo
-		//controlli per non fa andare le sprite troppo veloce e per selezionarle
-		if (contaSprite==0){
-			oldSpriteRun=oldSpriteRun+spriteRun;
-			if(oldSpriteRun>=120 || oldSpriteRun<=32)
-				spriteRun=-1*spriteRun;
+	//STAMPA GIOCATORE
+	if((contaCollisioni<60 && contaCollisioni%5!=0) || contaCollisioni==60) { //effetto lampeggia quando viene colpito
+		if(keyIsDown(RIGHT_ARROW)){ //se sta sparando
+			oldSpriteShootBug=0;
+			if(oldSpriteShoot<=40)
+				oldSpriteShoot=40;
 		}
-		image(player.sprites,player.positionX,player.positionY,player.width,player.height,oldSpriteRun,0+oldSpriteShoot,player.width/2,player.height/2+oldSpriteShootBug );
-	}
+		else if(!keyIsDown(RIGHT_ARROW)){
+			oldSpriteShoot=3;
+			oldSpriteShootBug=0;
+		}
+		if(player.onGround==true){ //se sta correndo
+			//controlli per non fa andare le sprite troppo veloce e per selezionarle
+	//		console.log(""spriteRun);
+			console.log(oldSpriteRun);
 
-	else //se sta saltando
-		image(player.sprites,player.positionX,player.positionY-10,player.width,player.height+10,110,oldSpriteShoot,player.width/2,(player.height/2)+7+oldSpriteShootBug );
+			if (contaSprite==0){
+				oldSpriteRun+=spriteRun;
+				if(oldSpriteRun>=64)
+					spriteRun=spriteRun*-1;
+				if(oldSpriteRun==0)
+					spriteRun=spriteRun*-1;
+
+
+			}
+			image(player.sprites,player.positionX,player.positionY,player.width,player.height,oldSpriteRun,0+oldSpriteShoot,player.width/2,player.height/2+oldSpriteShootBug );
+		}
+		else //se sta saltando
+			image(player.sprites,player.positionX,player.positionY-10,player.width,player.height+10,110,oldSpriteShoot,player.width/2,(player.height/2)+7+oldSpriteShootBug );
+	}
 
 	//STAMPA PROIETTILI
 	for(var i=0; i<colpi.length; i++){
@@ -123,17 +141,26 @@ function draw(){
 	//STAMPA OSTACOLI
 	for(var i=0; i<obstacles.length; i++){
 		obstacles[i].positionX-=velocityX;	//aggiorna la posizione degli ostacoli
-		fill(color(obstacles[i].color));
-		rect(obstacles[i].positionX, obstacles[i].positionY, obstacles[i].width, obstacles[i].height);//disegna il personaggio
+		if(obstacles[i].isSpecial==0)
+			image(obstacles[i].sprites,obstacles[i].positionX,obstacles[i].positionY,obstacles[i].width,obstacles[i].height,obstacles[i].spritePositionX,obstacles[i].spritePositionY,obstacles[i].width/2,obstacles[i].height/2 );
+		else if(obstacles[i].isSpecial==1)
+			image(obstacles[i].sprites,obstacles[i].positionX,obstacles[i].positionY,obstacles[i].width,obstacles[i].height,obstacles[i].spritePositionX,obstacles[i].spritePositionY,obstacles[i].width,obstacles[i].height);
+
 	}
 
 	//STAMPA INTERFACCIA UTENTE
 	fill(0);
 	textSize(32);
-	text(obstacleCounter, 10, 250);
-	text(currentPowerup, 500, 250);
-	if(contaScrittaPowerup!=0){
-		text(scrittaPowerup, (larghezzaCanvas/2)-(scrittaPowerup.length*12),50);
+	text(obstacleCounter, 10, 30); //contatore
+	for(var i=0; i<player.health; i++){ //cuori
+		fill(0);
+		image(cuore, -45+oldHealth, 210, 50, 50, 150, 0, 50, 50);
+		oldHealth+=40;
+	}
+	oldHealth=40;
+	if(contaScrittaPowerup!=0) {//scritte powerup
+		fill(40);
+		text(scrittaPowerup, (larghezzaCanvas/2)-(scrittaPowerup.length*10),50);
 		contaScrittaPowerup--;
 	}
 
@@ -214,10 +241,18 @@ function controlli(){
 	//se il nemico è vivo viene spostato verso sinistra e fluttua
 	}
 
-	collisioni();
+	if(player.health<=0)
+		fine();
+
+	if(contaCollisioni==60)
+		collisioni();
+
+	else if (contaCollisioni<60){
+		contaCollisioni--;
+		if(contaCollisioni<=0)
+			contaCollisioni=60;
+	}
 }
-
-
 
 
 //CONTROLLO COLLISIONI
@@ -229,14 +264,16 @@ function collisioni(){
 			powerup();
 			obstacles.splice(i,1);//elimina il powerup
 		}
-		else if(obstacles[0].isSpecial!=2)
-			fine();
+		else if(obstacles[0].isSpecial!=2){
+			player.health--;
+			contaCollisioni--;
+		}
 	}
 
 	//collisione ostacoli-colpi
 	for(var i=0; i<obstacles.length; i++){
 		for(var j=0; j<colpi.length; j++){
-			if(obstacles[i].isColliding(colpi[j].positionX, colpi[j].positionY, colpi[j].width, colpi[j].height)==true){
+			if(obstacles[i].isColliding(colpi[j].positionX, colpi[j].positionY, colpi[j].width+10, colpi[j].height)==true){
 				colpi.splice(j,1);
 				if(obstacles[i].isSpecial==1)
 					obstacles[i].becomePowerup();
@@ -258,8 +295,11 @@ function collisioni(){
 
 
 	//collisioni personaggio-nemico
-	if(player.isColliding(enemy.positionX, enemy.positionY, enemy.width, enemy.height)==true)
-		fine();
+	if(player.isColliding(enemy.positionX, enemy.positionY, enemy.width, enemy.height)==true){
+		player.health--;
+		contaCollisioni--;
+	}
+
 }
 
 //FUNZIONI CHE AGGIUNGONO DINAMICAMENTE OSTACOLI E IMMAGINE DI SFONDO
@@ -276,32 +316,36 @@ function addBackground(){
 //AGGIUNGE E RIMUOVE OSTACOLI DOPO CHE FINISCONO SOTTO LO 0
 function addObstacle(){
 	//gli ostacoli possono essere di due tipi: uno alto e stretto e l'altro basso e largo
-	var possibleHeight=[50, 30];
-	var possibleWidth=[30, 50];
+	var possibleSpritesPositionX=[129, 173, 85];
+	var possibleSpritesPositionY=[103, 94, 85];
+	var possibleHeight=[22, 40, 33];
+	var possibleWidth=[70, 38, 36];
 
 	do{
 		var positionX=Math.round(Math.random()*larghezzaCanvas); //genera la distanza del nuovo ostacolo rispetto a quello vecchio
-	}while(positionX<250);
+	}while(positionX<300);
 	positionX+=obstacles[obstacles.length-1].positionX;
-
+	var type=Math.round(Math.random());	//sceglie che tipo di ostacolo generare
 	var isSpecial=Math.round(Math.random()*100);
 	if(isSpecial<=90){ //10% probabilita di essere speciale
 		isSpecial=0; //non e' speciale
-		var color="#00FFF0";
 	}
 	else{
 		isSpecial=1;//è speciale
-		var color="#004440";
+		type=2;
 	}
-	var type=Math.round(Math.random());	//sceglie che tipo di ostacolo generare
 	var positionY=lunghezzaCanvas-possibleHeight[type]-80; //laposizione y si calcola come quella del giocatore
-	var obstacle= new Obstacle(possibleHeight[type], possibleWidth[type],color, positionX, positionY, isSpecial); //istanzia un nuovo ostacolo
-
+	var obstacle= new Obstacle("img/player.png",possibleSpritesPositionX[type],possibleSpritesPositionY[type], possibleHeight[type], possibleWidth[type], positionX, positionY, isSpecial); //istanzia un nuovo ostacolo
+	obstacle.sprites=loadImage("img/player.png");
 	obstacles.push(obstacle);
 
 	if(obstacles.length>6){ //se viene raggiunto il numero massimo di ostacoli
 		obstacles.splice(0,1); //elimina il primo ostacolo (obstacles è un array FILO)
 		obstacleCounter++;
+		var adesso=0;
+		//storage
+		if(typeof(Storage) !== "undefined" && obstacleCounter>=storage.getItem("record"))
+					storage.setItem("record",obstacleCounter);
 	}
 }
 
@@ -311,7 +355,7 @@ function addObstacle(){
 function powerup(){
 
 	do{
-		var randomPowerup=Math.round(Math.random()*3);
+		var randomPowerup=Math.round(Math.random()*4);
 		//MITRA
 		if(randomPowerup==0 && currentPowerup!="mitra"){
 			currentPowerup="mitra";
@@ -354,16 +398,21 @@ function powerup(){
 			contaScrittaPowerup=60;
 			scrittaPowerup="VELOCITA' RALLENTATA";
 		}
+		//VITA
+		else if(randomPowerup==4 && player.health<6){
+			player.health++;
+			isGeneratoPowerup=true;
+			contaScrittaPowerup=60;
+			scrittaPowerup="VITA";
+		}
 	}while(isGeneratoPowerup==false);
 
 	isGeneratoPowerup=false;
 }
 
-
-
-
 //FINE GIOCO
 function fine(){
 	noLoop();
-	$("#all").show();
+	$("#sopra").show();
+	alert(storage.getItem("record"));
 }
