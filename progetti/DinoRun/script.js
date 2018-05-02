@@ -192,7 +192,7 @@ function controlli(){
 		contaSprite++;
 
 	//CONTROLLO COMANDI PREMUTI
-	if(keyIsDown(UP_ARROW)){
+	if(keyIsDown(UP_ARROW) || mouseIsPressed){
 		if(player.onGround==true){
 			jumpfx.play();
 			player.salta();
