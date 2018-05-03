@@ -197,7 +197,7 @@ function controlli(){
 
 	//CONTROLLO COMANDI PREMUTI
 	if(keyIsDown(UP_ARROW)|| (mouseX<=larghezzaPagina/2 && mouseIsPressed)){
-		if(player.onGround==true)
+		if(player.onGround==true){
 			jumpfx.play();
 			player.salta();
 		}
