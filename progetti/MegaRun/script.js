@@ -2,7 +2,7 @@
 storage=window.localStorage;
 if(storage.getItem("record")==undefined)
 	storage.setItem("record", 0);
-
+larghezzaPagina=$(window).width();  
 //##################INIZIALIZZAZIONI#####################
 function setup(){
 	$("#sopra").hide();
@@ -196,13 +196,13 @@ function controlli(){
 		contaSprite++;
 
 	//CONTROLLO COMANDI PREMUTI
-	if(keyIsDown(UP_ARROW) || mouseIsPressed){
+	if(keyIsDown(UP_ARROW)|| touchX>=larghezzaPagina/2){
 		if(player.onGround==true){
 			jumpfx.play();
 			player.salta();
 		}
 	}
-	if(keyIsDown(RIGHT_ARROW)&& contaSpara>rateoDiFuoco){
+	if((keyIsDown(RIGHT_ARROW)&& contaSpara>rateoDiFuoco) || touchX<=larghezzaPagina/2){
 		var colpo= new Proiettile("img/player.png", spriteProiettile[0], spriteProiettile[1], lunghezzaProiettile, larghezzaProiettile, player.positionX+(player.width/2)-10, player.positionY+(player.height/2)-10);
 		colpo.sprites=loadImage("img/player.png");
 		colpi.push(colpo);
