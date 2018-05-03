@@ -203,7 +203,7 @@ function controlli(){
 		}
 	}
 	if(keyIsDown(RIGHT_ARROW) || (mouseX<larghezzaPagina/2 && mouseIsPressed)){
-		if(contaSpara>rateoDiFuoco)
+		if(contaSpara>rateoDiFuoco){
 			var colpo= new Proiettile("img/player.png", spriteProiettile[0], spriteProiettile[1], lunghezzaProiettile, larghezzaProiettile, player.positionX+(player.width/2)-10, player.positionY+(player.height/2)-10);
 			colpo.sprites=loadImage("img/player.png");
 			colpi.push(colpo);
