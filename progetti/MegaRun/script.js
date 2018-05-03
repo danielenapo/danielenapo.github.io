@@ -196,13 +196,13 @@ function controlli(){
 		contaSprite++;
 
 	//CONTROLLO COMANDI PREMUTI
-	if(keyIsDown(UP_ARROW)|| touchX>=larghezzaPagina/2){
+	if(keyIsDown(UP_ARROW)|| touches[0].x>=larghezzaPagina/2){
 		if(player.onGround==true){
 			jumpfx.play();
 			player.salta();
 		}
 	}
-	if(keyIsDown(RIGHT_ARROW) || touchX<=larghezzaPagina/2){
+	if(keyIsDown(RIGHT_ARROW) || touches[0].x<=larghezzaPagina/2){
 		if(contaSpara>rateoDiFuoco){
 			var colpo= new Proiettile("img/player.png", spriteProiettile[0], spriteProiettile[1], lunghezzaProiettile, larghezzaProiettile, player.positionX+(player.width/2)-10, player.positionY+(player.height/2)-10);
 			colpo.sprites=loadImage("img/player.png");
