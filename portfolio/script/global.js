@@ -3,27 +3,38 @@ $(document).ready(function(){
 
     //SLIDERS
     //terza
-    if($(".terzaDropdownContent").css("display")=="none"){
+
       $(".terzaDropdown").mouseenter(function(){
-          $(".terzaDropdownContent").slideDown();
-          $(".contenuto, #listdx, .contenutoHome").css("filter","blur(6px)");
+          $(".terzaDropdownContent").slideDown("fast");
+          $(".contenuto, #listdx, .contenutoHome, .bottom").css("filter","blur(6px)");
       });
-    }
+
     $(".terzaDropdown").mouseleave(function(){
-        $(".terzaDropdownContent").slideUp();
-        $(".contenuto, #listdx, .contenutoHome").css("filter","blur(0px)");
+        $(".terzaDropdownContent").slideUp("fast");
+        $(".contenuto, #listdx, .contenutoHome, .bottom").css("filter","blur(0px)");
     });
     //quarta
-    if($(".quartaDropdownContent").css("display")=="none"){
       $(".quartaDropdown").mouseenter(function(){
-          $(".quartaDropdownContent").slideDown();
-          $(".contenuto, #listdx, .contenutoHome").css("filter","blur(6px)");
+          $(".quartaDropdownContent").slideDown("fast");
+          $(".contenuto, #listdx, .contenutoHome, .bottom").css("filter","blur(6px)");
       });
-    }
+
     $(".quartaDropdown").mouseleave(function(){
-        $(".quartaDropdownContent").slideUp();
-        $(".contenuto, #listdx, .contenutoHome").css("filter","blur(0px)");
+        $(".quartaDropdownContent").slideUp("fast");
+        $(".contenuto, #listdx, .contenutoHome, .bottom").css("filter","blur(0px)");
     });
+
+    //quarta
+      $(".quintaDropdown").mouseenter(function(){
+          $(".quintaDropdownContent").slideDown("fast");
+          $(".contenuto, #listdx, .contenutoHome, .bottom").css("filter","blur(6px)");
+      });
+
+    $(".quintaDropdown").mouseleave(function(){
+        $(".quintaDropdownContent").slideUp("fast");
+        $(".contenuto, #listdx, .contenutoHome, .bottom").css("filter","blur(0px)");
+    });
+
 
 
     //ACCESSO RAPIDO

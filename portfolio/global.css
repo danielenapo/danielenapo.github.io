@@ -1,5 +1,5 @@
 body{
-	font-family: arial;
+	font-family:"roboto", arial;
 /*	margin: 0px;	*/
 	font-size:14pt;
 	background-image: url("img/background.jpg");
@@ -34,7 +34,7 @@ li.eldx:hover{
 }
 
 p.bottom{
-	color: white;
+	color: black;
 	font-size: 14px;
 	text-align: center;
 	}
