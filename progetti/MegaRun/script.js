@@ -374,6 +374,7 @@ function powerup(){
 			isGeneratoPowerup=true;
 			contaScrittaPowerup=60;
 			scrittaPowerup="MITRAGLIATORE";
+			luna=false;
 		}
 		//CANNONE
 		else if(randomPowerup==1 && currentPowerup!="cannone"){
@@ -388,6 +389,7 @@ function powerup(){
 			isGeneratoPowerup=true;
 			contaScrittaPowerup=60;
 			scrittaPowerup="CANNONE";
+			luna=false;
 
 		}
 		//PISTOLA
@@ -403,6 +405,7 @@ function powerup(){
 			isGeneratoPowerup=true;
 			contaScrittaPowerup=60;
 			scrittaPowerup="PISTOLA";
+			luna=false;
 
 		}
 		//RALLENTATORE
@@ -410,12 +413,14 @@ function powerup(){
 			velocityX--;
 			isGeneratoPowerup=true;
 			scrittaPowerup="VELOCITA RALLENTATA";
+			luna=false;
 		}
 		//VITA
 		else if(randomPowerup==4 && player.health<5){
 			player.health++;
 			isGeneratoPowerup=true;
 			scrittaPowerup="VITA";
+			luna=false;
 		}
 		//GRAVITA
 		else if(randomPowerup==5 && luna==false){
