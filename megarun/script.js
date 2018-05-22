@@ -52,7 +52,8 @@ function setup(){
 	oldHealth=40;
 
 	//INIZIALIZZAZIONE NEMICO
-	enemy=new Enemy(false,"img/player.png",50, 84, "#0000FF", larghezzaCanvas, (lunghezzaCanvas-(lunghezzaCanvas/3)), 2 );
+	var randEnemyType=Math.round(Math.random());
+	enemy=new Enemy(false,"img/player.png",50, 84, "#0000FF", larghezzaCanvas, (lunghezzaCanvas-(lunghezzaCanvas/3)), 2, 0 );
 	enemy.sprites=loadImage("img/player.png");
 	fluttua=0;
 	oldSpriteEnemy=0;
@@ -257,11 +258,17 @@ function controlli(){
 
 	//CONTROLLO NEMICO
 	if(enemy.isAlive==true){
-		fluttua+=0.03;
-		enemy.positionX-=4;
-		//enemy.positionY=((Math.sin(fluttua))*30)+100; 	//se il nemico è vivo viene spostato verso sinistra e fluttua
-		enemy.positionY= map(noise(fluttua),0,1,0,lunghezzaCanvas-130);
-		console.log(enemy.positionY);
+		if(enemy.type==0){
+			fluttua+=0.03;
+			enemy.positionX-=4;
+			//enemy.positionY=((Math.sin(fluttua))*30)+100; 	//se il nemico è vivo viene spostato verso sinistra e fluttua
+			enemy.positionY= map(noise(fluttua),0,1,0,lunghezzaCanvas-130);
+		}
+		else{
+			fluttua+=0.03;
+			enemy.positionX-=6;
+			enemy.positionY=((Math.sin(fluttua))*30)+100; 	//se il nemico è vivo viene spostato verso sinistra e fluttua
+		}
 	}
 }
 
@@ -369,7 +376,8 @@ function addObstacle(){
 //ASSEGNAZIONE DI UN POWERUP RANDOM (DOPO CHE E' STATO PRESO)
 function powerup(){
 	do{
-		var randomPowerup=Math.round(Math.random()*6);
+		var randomPowerup=Math.round(Math.random()*7);
+		var abbassaProbLuna=Math.round(Math.random());
 		//MITRA
 		if(randomPowerup==0 && currentPowerup!="mitra"){
 			currentPowerup="mitra";
@@ -437,7 +445,7 @@ function powerup(){
 			gravity=1.2;
 		}
 		//GRAVITA
-		else if(randomPowerup==5 && luna==false){
+		else if(randomPowerup==5 && luna==false && abbassaProbLuna==1){
 			gravity=0.9;
 			jumpfx.playbackRate=0.6;
 			isGeneratoPowerup=true;
