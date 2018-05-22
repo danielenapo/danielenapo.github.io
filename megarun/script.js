@@ -23,6 +23,7 @@ function setup(){
 	velocityX=14;
 	difficultyLevel=0;
 	contaSprite=0;
+	invincibleCounter=0;
 	velocitaSprite=3;
 	cuore=loadImage("img/player.png");
 	font=loadFont("css/8-BIT WONDER.ttf");
@@ -109,7 +110,7 @@ function draw(){
 	}
 
 	//STAMPA GIOCATORE
-	if((contaCollisioni<60 && contaCollisioni%5!=0) || contaCollisioni==60) { //effetto lampeggia quando viene colpito
+	if(((contaCollisioni<60 && contaCollisioni%5!=0) || contaCollisioni==60) || (invincibleCounter>0 && invinciblieCounter%5!=0)) { //effetto lampeggia quando viene colpito
 		if(keyIsDown(RIGHT_ARROW)){ //se sta sparando
 			oldSpriteShootBug=0;
 			if(oldSpriteShoot<=40)
@@ -306,7 +307,7 @@ function collisioni(){
 		}
 
 	//queste collisioni non si controllano se il giocatore è appena stato colpito
-	if(contaCollisioni==60){
+	if(contaCollisioni==60 || invincibleCounter>0){
 		//PERSONAGGIO - OSTACOLI
 		if(player.isColliding(obstacles[0].positionX, obstacles[0].positionY, obstacles[0].width, obstacles[0].height)==true && obstacles[0].isSpecial!=2){
 			hitfx.play();
@@ -320,6 +321,9 @@ function collisioni(){
 			hitfx.play();
 			contaCollisioni--;
 		}
+
+		if(invincibleCounter>0)
+			invincibleCounter--;
 	}
 
 	else if (contaCollisioni<60){
@@ -376,7 +380,7 @@ function addObstacle(){
 //ASSEGNAZIONE DI UN POWERUP RANDOM (DOPO CHE E' STATO PRESO)
 function powerup(){
 	do{
-		var randomPowerup=Math.round(Math.random()*7);
+		var randomPowerup=Math.round(Math.random()*8);
 		var abbassaProbLuna=Math.round(Math.random());
 		//MITRA
 		if(randomPowerup==0 && currentPowerup!="mitra"){
@@ -459,10 +463,18 @@ function powerup(){
 			scrittaPowerup="GRAVITA NORAMLE";
 			luna=false;
 		}
+		//NIENTE
 		else if(randomPowerup==6){
 			scrittaPowerup="NIENTE";
 			gravity=1.2;
 		}
+		//invincibilita
+		else if(randomPowerup==7){
+			scrittaPowerup="INVINCIBILE PER 10s";
+			invincibleCounter=10*30;
+			gravity=1.2;
+		}
+
 	}while(isGeneratoPowerup==false);
 
 	contaScrittaPowerup=60;
