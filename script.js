@@ -468,10 +468,31 @@ function powerup(){
 			scrittaPowerup="NIENTE";
 			gravity=1.2;
 		}
-		//invincibilita
+		//INVINCIBILITA
 		else if(randomPowerup==7){
 			scrittaPowerup="INVINCIBILE PER 10s";
 			invincbleCounter=10*30;
+			gravity=1.2;
+		}
+		//DANNO DIMINUITO
+		else if(randomPowerup==8){
+			switch(danno){
+				case 1:
+					scrittaPowerup="DANNO NIMINUITO";
+					danno=0.5;
+					break;
+				case 2:
+					scrittaPowerup="DANNO NIMINUITO";
+					danno=1;
+					break;
+				case 0.7:
+					scrittaPowerup="DANNO NIMINUITO";
+					danno=0.7;
+					break;
+				default:
+					scrittaPowerup="NIENTE";
+					break;
+			}		
 			gravity=1.2;
 		}
 
