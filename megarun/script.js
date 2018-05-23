@@ -267,9 +267,9 @@ function controlli(){
 		}
 		else{
 			//fluttua+=0.5;
-			enemy.positionX-=6;
+			enemy.positionX-=8;
 			//enemy.positionY=((Math.sin(fluttua))*30)+100; 	//se il nemico è vivo viene spostato verso sinistra e fluttua
-			enemy.positionY=(lunghezzaCanvas/2)-20;	
+			enemy.positionY=(lunghezzaCanvas/2)-40;	
 		}
 	}
 }
