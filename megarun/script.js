@@ -8,7 +8,7 @@ larghezzaPagina=$(window).width();
 
 //inizializzazione font
 function preload(){
-	font=loadFont("css/8-BIT WONDER.ttf");
+	font=loadFont("css/8BIT.ttf");
 }
 
 //##################INIZIALIZZAZIONI VARIABLI DI GIOCO#####################
