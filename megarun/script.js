@@ -220,6 +220,12 @@ function controlli(){
 			shootfx.play();
 		}
 	}
+	
+	if(keyIsDown(27)){
+		noLoop();
+		scrittaPowerup="PAUSE";
+		$("*").keypress(function(){loop()});
+	}
 
 	//CONTROLLO DIFFICOLTA' DI GIOCO
 	if(difficultyLevel%2==0 && (obstacleCounter+1)%10==0){ 	//la velocita aumenta di 0.5 ogni 10 ostacoli saltati
