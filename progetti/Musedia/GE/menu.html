@@ -1,9 +1,8 @@
-<!-- Musedia   Copyright (C)   2017   Daniele Napolitano !-->
-
 <html>
 <head>
-	<title> Musedia </title>
-	<script src="genera.js"></script>
+	<title> RANDOM MUSIC </title>
+	<script src="p5.js"></script>
+	<script src="musical.js"></script>
 	<link rel="stylesheet" type="text/css" href="menu.css">
 </head>
 <body>
@@ -16,22 +15,27 @@
 		<option value="2"> 2/4 </option>
 	</select><br>
 	numero di battute:
-	<input type="number" id="battute" value="1" min="1" max="30" style="width:40px"><br>
-	scala:
-	<select id="scala">
-		<option value="maggiore"> maggiore </option>
-		<option value="minore"> minore </option>
-		<option value="blues"> blues </option>
+	<select id="battute">
+		<option value="1"> 1 </option>
+		<option value="2"> 2 </option>
+		<option value="3"> 3 </option>
+		<option value="4"> 4 </option>
+		<option value="5"> 5 </option>
 	</select><br>
+	scala:<br> <input type="radio" name="scala" value="maggiore" checked="checked"> maggiore
+	<input type="radio" name="scala" value="minore"> minore
+	<input type="radio" name="scala" value="blues">blues<br>
 	prima nota (tonalita):
 	<select id="ton">
 		<option value="C" > Do </option>
 		<option value="D" > Re </option>
 	</select>
 	<br>
-	<br><br>
-	<button onClick="avvio()">genera</button>
+	<button onClick="setup()">genera</button>
 	<br>
 		<div id="generato"></div>
+
+		<script src="genera.js"></script>
+
 </body>
 </html>

@@ -1,10 +1,9 @@
-/*Musedia   Copyright (C)   2017   Daniele Napolitano*/
-
 body{
-		font-family: arial;
-		background-image: url("../img/wallpaper.png");
+		background-image:url("../img/sfondo.jpg");
 		color:white;}
 h1{
+		width:50%;
+		margin:auto;
 		color:white;}
 td{
 		border:2px solid black;
