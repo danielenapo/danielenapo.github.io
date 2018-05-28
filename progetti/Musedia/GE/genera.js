@@ -134,7 +134,7 @@ function suona(){
 	if(c==tempi.length)
 		return;
 
-	pianoforte.tone(progressione[c], 1, tempi[c]);
+	pianoforte.tone(progressione[c], 1, tempi[c]/2);
 	c++;
 	setTimeout(function(){suona()},tempi[c]*500);
 }
