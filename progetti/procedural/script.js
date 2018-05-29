@@ -5,15 +5,25 @@ function setup(){
 	height=500;
 	createCanvas(width, height);
 	noStroke();
-	seed=Math.floor(Math.random()*1000000);
-	noiseSeed(seed);
-	document.getElementById("seed").innerHTML="seed: "+seed;
-
+	//name generator
 	ng=new JapaneseNameGenerator(2,6);
-	name="";
+	var name="";
 	name+=ng.generateName()+" "+ng.generateName();
-	document.getElementById("name").innerHTML="------ name: "+name;
+	document.getElementById("name").value=name;
 
+	generate();
+}
+
+//GENERA IL TERRENO
+function generate(){
+	//prende come seed il valore dell'input box
+	var name=document.getElementById("name").value;
+	//trasformo il nome della zona in un numero(per poter essere utilizzato come seed)
+	seedName=0;
+	for(var i=0; i<name.length; i++){
+		seedName+=(name.charCodeAt(i)*Math.pow(10,i));
+	}
+	noiseSeed(seedName);
 
 	background(0);
 	resolution=13; //risoluzione dell'mmagine(grandezza dei quadrati)
@@ -28,5 +38,4 @@ function setup(){
 			rect(x, y, resolution, resolution); //disegna il quadrato
 		}
 	}
-
 }
