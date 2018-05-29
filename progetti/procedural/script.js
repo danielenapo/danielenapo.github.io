@@ -7,10 +7,16 @@ function setup(){
 	noStroke();
 	seed=Math.floor(Math.random()*1000000);
 	noiseSeed(seed);
+	document.getElementById("seed").innerHTML="seed: "+seed;
+
+	ng=new JapaneseNameGenerator(2,6);
+	name="";
+	name+=ng.generateName()+" "+ng.generateName();
+	document.getElementById("name").innerHTML="------ name: "+name;
+
 
 	background(0);
 	resolution=13; //risoluzione dell'mmagine(grandezza dei quadrati)
-	document.getElementById("seed").innerHTML="seed: "+seed;
 
 	for(var y=0; y<height; y+=resolution){ //per ogni quadrato del canvas
 		for (var x=0; x<width; x+=resolution){
