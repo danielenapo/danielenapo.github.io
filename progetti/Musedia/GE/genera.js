@@ -1,7 +1,18 @@
-function setup(){
-	var cont=[];
+function setup() {
+    seed = Math.floor(Math.random() * 100000);
+    noiseSeed(seed);
+	cont=[];
 	t=0;
-	pianoforte = new Instrument('piano');
+    pianoforte = new Instrument('piano');
+    progressione = [];
+    tempi = [];
+    document.getElementById("seed").innerHTML = "seed: "+seed;
+}
+
+function cancella() {
+    document.getElementById("generato").innerHTML = "";
+    setup();
+    genera();
 }
 
 function genera()
@@ -49,8 +60,6 @@ function genera()
 			break;
 	}
 	//output
-	progressione=[];
-	tempi=[];
 	var lead= new nota(cont, progressione, ton, battute, tempo, tempi);
 	tempi=lead.generaTempo();
 	progressione=lead.prossima();
