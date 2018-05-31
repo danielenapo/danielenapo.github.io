@@ -44,7 +44,9 @@ function genera()
 				else if(scala=="minore")
                     cont = ["C", "D", "^C", "D", "^D", "F", "G", "^G", "^A","c", "d", "^d", "f", "g", "^g", "^a"];
 				else if(scala=="blues")
-					cont=["c" , "MIb" , "FA" , "SOLb" , "SOL" , "SIb" , "DO" ];
+                    cont = ["C", "^D", "F", "^F", "G", "^A", "c", "^d", "f", "^f", "g", "^a"];
+                else if (scala == "pentatonica")
+                    cont = ["C", "D", "E", "G", "A", "c", "d", "e", "g", "a"];
 			}
 			break;
 
@@ -60,7 +62,7 @@ function genera()
 			break;
 	}
 	//output
-	var lead= new nota(cont, progressione, ton, battute, tempo, tempi);
+	var lead= new generaSequenza(cont, progressione, ton, battute, tempo, tempi);
 	tempi=lead.generaTempo();
 	progressione=lead.prossima();
 	output.innerHTML+=visualizza(progressione, tempi);
@@ -69,7 +71,7 @@ function genera()
 }
 
 
-function nota(note,progressione, prec, battute, max, tempi) //oggetto
+function generaSequenza(note,progressione, prec, battute, max, tempi) //oggetto
 {
 	this.tempi=tempi;//tempi generati
 	this.max=max;	//max è il tempo, chiamato così per non confondere nella funzione generaTempo()
@@ -82,7 +84,7 @@ function nota(note,progressione, prec, battute, max, tempi) //oggetto
     {
         var tempNoise = 0;
 		valori=[0.5,1,2];		//valori possibili(in ordine croma, semiminima, minima)
-		for(var k=0; k<100;k++)	//for delle battute
+		for(var k=0; k<this.battute;k++)	//for delle battute
 		{
 			sommaf=0; //somma finale
 			somma=0;	//somma temporanea
@@ -105,10 +107,14 @@ function nota(note,progressione, prec, battute, max, tempi) //oggetto
 
 	//metodo che calcola la progressione di accordi
 	this.prossima =function()
-	{
+    {
+        if (this.note == "blues" || this.note == "pentatonica" )
+            offsetMelodia = 0.7;
+        else
+            offsetMelodia = 0.3;
 		for(var i=0; i<tempi.length; i++)
 		{
-            t += 2
+            t += offsetMelodia
             random = Math.round(noise(t) * cont.length);
 			progressione.push( cont[random]);
 		}
