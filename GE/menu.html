@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title> RANDOM MUSIC </title>
+	<script src="p5.js"></script>
+	<script src="musical.js"></script>
+	<link rel="stylesheet" type="text/css" href="menu.css">
+</head>
+<body>
+	<h1>GENERATORE DI MUSICA</h1>
+	<h3>Impostazioni:</h3>
+	tempo:
+	<select id="tempo">
+		<option value="4"> 4/4 </option>
+		<option value="3"> 3/4 </option>
+		<option value="2"> 2/4 </option>
+	</select><br>
+    velocita (in BPM)<input type="number" id="velocita"/>
+    <br />
+	numero di battute:
+    <input type="number" id="battute" />
+    <br>
+	scala:<br> <input type="radio" name="scala" value="maggiore" checked="checked"> maggiore
+	<input type="radio" name="scala" value="minore"> minore
+	<input type="radio" name="scala" value="blues">blues
+    <input type="radio" name="scala" value="pentatonica">pentatonica
+    <br>
+	prima nota (tonalita):
+	<select id="ton">
+		<option value="C" > Do </option>
+		<!--<option value="D" > Re </option>--!>
+	</select>
+	<br>
+    <p id="seed"></p>
+    <!--<button onClick="clear()">cancella e genera</button>!-->
+    <button onClick="cancella()">genera</button>
+	<br>
+		<div id="generato"></div>
+
+		<script src="genera.js"></script>
+
+</body>
+</html>
