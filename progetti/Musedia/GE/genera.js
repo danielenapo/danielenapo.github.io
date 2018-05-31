@@ -23,9 +23,11 @@ function genera()
 	var tempo=document.getElementById("tempo").value;
 	//input n°battute
 	var battute = document.getElementById('battute').value;
-	//input tipo di scala
-	var scala_value = document.getElementsByName('scala');
-	var scala;
+    //input BPM
+    var bpm = document.getElementsByName('bpm').value;
+    //input tipo di scala
+    var scala_value = document.getElementsByName('scala');
+	var scala="";
 	for(var i = 0; i < scala_value.length; i++)
 	{
 		if(scala_value[i].checked){
@@ -62,7 +64,7 @@ function genera()
 			break;
 	}
 	//output
-	var lead= new generaSequenza(cont, progressione, ton, battute, tempo, tempi);
+	var lead= new generaSequenza(cont, progressione, ton, battute, tempo, tempi, bpm);
 	tempi=lead.generaTempo();
 	progressione=lead.prossima();
 	output.innerHTML+=visualizza(progressione, tempi);
@@ -71,14 +73,15 @@ function genera()
 }
 
 
-function generaSequenza(note,progressione, prec, battute, max, tempi) //oggetto
+function generaSequenza(note,progressione, prec, battute, max, tempi, bpm) //oggetto
 {
 	this.tempi=tempi;//tempi generati
 	this.max=max;	//max è il tempo, chiamato così per non confondere nella funzione generaTempo()
 	this.battute=battute
 	this.note=note;//note possibili(scala)
 	this.progressione=progressione;//note generate
-	this.prec=prec;
+    this.prec = prec;
+    this.bpm = bpm;
 
 	this.generaTempo=function()
     {
@@ -108,16 +111,15 @@ function generaSequenza(note,progressione, prec, battute, max, tempi) //oggetto
 	//metodo che calcola la progressione di accordi
 	this.prossima =function()
     {
-        if (this.note == "blues" || this.note == "pentatonica" )
-            offsetMelodia = 0.7;
-        else
-            offsetMelodia = 0.3;
-		for(var i=0; i<tempi.length; i++)
+        offsetMelodia = 0.5;
+        progressione.push(cont[0]);
+		for(var i=0; i<tempi.length-2; i++)
 		{
             t += offsetMelodia
             random = Math.round(noise(t) * cont.length);
 			progressione.push( cont[random]);
-		}
+        }
+        progressione.push(cont[0]);
 			return progressione;
 	}
 }
@@ -128,22 +130,9 @@ function visualizza(nota, tempo)
 	var apertura="<tr><td>";
 	var chiusura="</td></tr>";
 	for (var i=0; i<tempo.length;i++)
-	{
-		out+=apertura+nota[i]+"</td><td>";
-		out+=tempo[i]+chiusura;
-
-	}
+		out+=apertura+nota[i]+"</td><td>"+tempo[i]+chiusura;
 	out+="</table>";
 		return out;
-}
-
-function Probabilita(percentuale)
-{
-	var random=Math.floor((Math.random()*10)+1);
-	if (random<=5)
-		return true;
-	else
-		return false;
 }
 
 function suona(){
@@ -152,5 +141,5 @@ function suona(){
 
 	pianoforte.tone(progressione[c], 1, tempi[c]/2);
 	c++;
-	setTimeout(function(){suona()},tempi[c-1]*500);
+	setTimeout(function(){suona()},(tempi[c-1])*500);
 }
