@@ -39,7 +39,9 @@ function setup() {
 	hitfx=document.getElementById("hitfx");
 	jumpfx.volume=0.5; jumpfx.playbackRate=1;
 	shootfx.volume=0.5; shootfx.playbackRate=1;
-	bgmusic.currentTime=0; bgmusic.play();
+    bgmusic.currentTime = 0; bgmusic.play();
+    toccaSalta = false;
+    toccaSpara = false;
 
 
 	//INIZIALIZZAZIONI OGGETTO PERSONAGGIO
@@ -203,14 +205,14 @@ function controlli(){
 	else
 		contaSprite++;
 
-	//CONTROLLO COMANDI CONTROLLER/TASTIERA
-    if (keyIsDown(UP_ARROW)){
+    //CONTROLLO COMANDI CONTROLLER/TASTIERA
+    if (keyIsDown(UP_ARROW) || toccaSalta==true) {
 		if(player.onGround==true){
 			jumpfx.play();
 			player.salta();
 		}
 	}
-    if (keyIsDown(RIGHT_ARROW)){ 
+    if (keyIsDown(RIGHT_ARROW) || toccaSpara==true){ 
 		if(contaSpara>rateoDiFuoco){
 			var colpo= new Proiettile("img/player.png", spriteProiettile[0], spriteProiettile[1], lunghezzaProiettile, larghezzaProiettile, player.positionX+(player.width/2)-10, player.positionY+(player.height/2)-10);
 			colpo.sprites=loadImage("img/player.png");
@@ -396,7 +398,7 @@ function addObstacle(){
 //ASSEGNAZIONE DI UN POWERUP RANDOM (DOPO CHE E' STATO PRESO)
 function powerup(){
 	do{
-		var randomPowerup=Math.round(Math.random()*9);
+		var randomPowerup=Math.round(Math.random()*7);
 		var abbassaProbLuna=Math.round(Math.random());
 		//MITRA
 		if(randomPowerup==0 && currentPowerup!="minigun"){
@@ -482,13 +484,15 @@ function powerup(){
 		//NIENTE
 		else if(randomPowerup==6){
 			scrittaPowerup="NOTHING";
-			gravity=1.2;
+            gravity = 1.2;
+            isGeneratoPowerup = true;
 		}
 		//invincibilita
 		else if(randomPowerup==7){
 			scrittaPowerup="INVINCIBLE FOR 10s";
 			invincibleCounter=10*30;
-			gravity=1.2;
+            gravity = 1.2;
+            isGeneratoPowerup = true;
 		}
 
 	}while(isGeneratoPowerup==false);
@@ -516,20 +520,27 @@ function fine(){
 function touchStarted() {
     for (var i = 0; i < touches.length; i++) {
         if (touches[i].x <= (larghezzaPagina / 2)){
-            if (player.onGround == true) {
-                jumpfx.play();
-                player.salta();
-            }
+            toccaSalta = true;
         }
         if (touches[i].x > (larghezzaPagina / 2)) {
-            if (contaSpara > rateoDiFuoco) {
-                var colpo = new Proiettile("img/player.png", spriteProiettile[0], spriteProiettile[1], lunghezzaProiettile, larghezzaProiettile, player.positionX + (player.width / 2) - 10, player.positionY + (player.height / 2) - 10);
-                colpo.sprites = loadImage("img/player.png");
-                colpi.push(colpo);
-                contaSpara = 0;
-                shootfx.play();
-            }
+            toccaSpara = true;
         }
     }
+    //touchStarted = true;
+
+}
+
+function touchEnded() {
+    toccaSalta = false;
+    toccaSpara = false;
+    for (var i = 0; i < touches.length; i++) {
+        if (touches[i].x <= (larghezzaPagina / 2)) {
+            toccaSalta = true;
+        }
+        if (touches[i].x > (larghezzaPagina / 2)) {
+            toccaSpara = true;
+        }
+    }
+    //touchStarted = true;
 
 }
