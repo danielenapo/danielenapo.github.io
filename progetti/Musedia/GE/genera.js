@@ -64,7 +64,7 @@ function genera()
 			break;
 	}
 	//output
-	var lead= new generaSequenza(cont, progressione, ton, battute, tempo, tempi, bpm);
+	var lead= new generaSequenza(cont, progressione, ton, battute, tempo, tempi);
 	tempi=lead.generaTempo();
 	progressione=lead.prossima();
 	output.innerHTML+=visualizza(progressione, tempi);
@@ -73,7 +73,7 @@ function genera()
 }
 
 
-function generaSequenza(note,progressione, prec, battute, max, tempi, bpm) //oggetto
+function generaSequenza(note,progressione, prec, battute, max, tempi) //oggetto
 {
 	this.tempi=tempi;//tempi generati
 	this.max=max;	//max è il tempo, chiamato così per non confondere nella funzione generaTempo()
@@ -81,7 +81,7 @@ function generaSequenza(note,progressione, prec, battute, max, tempi, bpm) //ogg
 	this.note=note;//note possibili(scala)
 	this.progressione=progressione;//note generate
     this.prec = prec;
-    this.bpm = bpm;
+    //this.bpm = bpm;
 
 	this.generaTempo=function()
     {
@@ -141,6 +141,6 @@ function suona(){
 
 	pianoforte.tone(progressione[c], 1, tempi[c]/2);
 	c++;
-	alert(bpm);
+	//alert(bpm);
 	setTimeout(function(){suona()},((tempi[c-1])*500));
 }
