@@ -24,7 +24,7 @@ function genera()
 	//input n°battute
 	var battute = document.getElementById('battute').value;
     //input BPM
-    var bpm = document.getElementById('bpm').value;
+    //var bpm = document.getElementById('bpm').value;
     //input tipo di scala
     var scala_value = document.getElementsByName('scala');
 	var scala="";
