@@ -73,10 +73,10 @@
 			// When it's done
 			function gotData(result) {
 			  // Update the status log
-			  result=familyFriendly(result);
+			  var testo=familyFriendly(result.generated);
 			  var end="";
-			  for(var i=0; i<result.generated.length; i++){
-				end+=result.generated[i];
+			  for(var i=0; i<testo.length; i++){
+				end+=testo[i];
 				if(end.charCodeAt(i)==10)					
 					break;
 			  }
