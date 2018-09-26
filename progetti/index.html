@@ -91,13 +91,13 @@
 			}
 			  
 			  function familyFriendly(badText){
-				  badText.replace(/porco/g, "");
-				  badText.replace(/dio/g, "");
-				  badText.replace(/minchia/g, "");	
-				  badText.replace(/cazzo/g, "");
-				  badText.replace(/merda/g, "");
+				  goodText=badText.replace(/porco/g, "");
+				  goodText=goodText.replace(/dio/g, "");
+				  goodText=goodText.replace(/minchia/g, "");	
+				  goodText=goodText.replace(/cazzo/g, "");
+				  goodText=goodText.replace(/merda/g, "");
 				  
-				  return badText;
+				  return goodText;
 			  }
 		  }
 		}
