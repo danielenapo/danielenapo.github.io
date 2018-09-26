@@ -9,8 +9,7 @@
   <script src="ml5.js"></script>
 </head>
 <body>
-  <h1>Be Right Back</h1>
-  <p>create your virtual clone :)</p>
+  <h1>Generatore chat</h1>
   <br>
     <p id="status">Offline</p>
     <p ><textarea id="result"></textarea></p>
@@ -92,10 +91,12 @@
 			}
 			  
 			  function familyFriendly(badText){
-				  badText.remove("porco");
-				  badText.remove("dio");
-				  badText.remove("minchia");	
-				  badText.remove("cazzo");
+				  badText.replace(/porco/g, "");
+				  badText.replace(/dio/g, "");
+				  badText.replace(/minchia/g, "");	
+				  badText.replace(/cazzo/g, "");
+				  badText.replace(/merda/g, "");
+				  
 				  return badText;
 			  }
 		  }
