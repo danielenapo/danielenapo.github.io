@@ -74,6 +74,7 @@
 			// When it's done
 			function gotData(result) {
 			  // Update the status log
+			  result=familyFriendly(result);
 			  var end="";
 			  for(var i=0; i<result.generated.length; i++){
 				end+=result.generated[i];
@@ -89,6 +90,14 @@
 			  select('#status').html('Online');
 			  select('#textInput').value("");
 			}
+			  
+			  function familyFriendly(badText){
+				  badText.remove("porco");
+				  badText.remove("dio");
+				  badText.remove("minchia");	
+				  badText.remove("cazzo");
+				  return badText;
+			  }
 		  }
 		}
 	</script>
