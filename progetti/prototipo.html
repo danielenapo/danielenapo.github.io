@@ -1,0 +1,39 @@
+
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/@magenta/music@1.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver"></script>
+
+  </head>
+  <body>
+	<h1>Prototipo generatore di musica</h1>
+	<p id="caricamento">caricamento modello...</p>
+	<button onclick="play()"><h1>Genera sequenza</h1></button>
+	<button onclick="download()"><h1>scarica sequenza</h1></button>
+	<script>
+      const model = new mm.MusicVAE('https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/trio_4bar');
+      model.initialize().then(()=>{
+		document.getElementById("caricamento").innerHTML="il modello e' stato caricato";
+		});
+	  const player = new mm.Player();
+	  let generato;	
+		
+      function play() {
+        mm.Player.tone.context.resume(); 
+        model.sample(1).then((samples) => {
+			generato=samples[0];
+			player.start(generato);
+		});
+      }
+	  
+	  function download(){
+		if(!generato)
+			alert("Non puoi scaricare una sequenza se non l'hai generata!");
+		else 
+			saveAs(new File([mm.sequenceProtoToMidi(generato)], 'trio.mid'));
+			
+	  }
+	  
+    </script>
+  </body>
+</html>
