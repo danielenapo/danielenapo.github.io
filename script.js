@@ -469,13 +469,13 @@ function powerup(){
 			gravity=1.2;
 		}
 		//INVINCIBILITA
-		else if(randomPowerup==7){
+		/*else if(randomPowerup==7){
 			scrittaPowerup="INVINCIBLE FOR 10s";
 			invincbleCounter=10*30;
 			gravity=1.2;
-		}
+		}*/
 		//DANNO DIMINUITO
-		else if(randomPowerup==8){
+		else if(randomPowerup==7){
 			switch(danno){
 				case 1:
 					scrittaPowerup="LESS WEAPON DAMAGE";
