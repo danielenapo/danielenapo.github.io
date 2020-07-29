@@ -1,0 +1,99 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>be right back</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js"></script>
+  <script src="ml5.js"></script>
+</head>
+<body>
+  <h1>Generatore chat</h1>
+  <br>
+    <p id="status">Offline</p>
+    <p ><textarea id="result"></textarea></p>
+  <p>
+    <input id="textInput" />  <button id="generate">></button>
+  </p>
+
+
+
+	<script>
+			// Create the LSTM Generator passing it the model directory
+		chat="";
+		const lstm = ml5.LSTMGenerator('trainer/models/input', modelReady);
+
+		let textInput;
+		let lengthSlider;
+		let tempSlider;
+		let button;
+
+		function modelReady() {
+		  select('#status').html('Online');
+		}
+
+		function setup() {
+		  noCanvas();
+
+		  // Grab the DOM elements
+		  textInput = select('#textInput');
+		  lengthSlider = 40;
+		  tempSlider = 0;
+		  button = select('#generate');
+
+		  // DOM element events
+		  button.mousePressed(generate);
+		}
+
+		// Generate new text
+		function generate() {
+		  // Update the status log
+		  select('#status').html('sta scrivendo...');
+		  setTimeout(function(){ real_generate() }, 100);
+		}
+		  
+		function real_generate(){
+		  // Grab the original text
+		  let original = textInput.value()+String.fromCharCode(10)+"daniele: ";
+		  // Make it to lower case
+		  let txt = original.toLowerCase();
+
+		  // Check if there's something to send
+		  if (txt.length > 0) {
+			let data = {
+			  seed: txt,
+			  temperature: tempSlider,
+			  length: lengthSlider
+			};
+
+			// Generate text with the lstm
+			lstm.generate(data, gotData);
+
+			// When it's done
+			function gotData(result) {
+			  // Update the status log
+			  var testo=result.generated;
+			  var end="";
+			  for(var i=0; i<testo.length; i++){
+				end+=testo[i];
+				if(end.charCodeAt(i)==10)					
+					break;
+			  }
+			  
+			  if(end.charCodeAt(end.length)!=10)
+				chat+=String.fromCharCode(10);
+			  
+			  chat+="tu: "+txt + end;
+			  select('#result').value(chat);
+			  select('#status').html('Online');
+			  select('#textInput').value("");
+			}
+			  
+
+		  }
+		}
+	</script>
+
+</body>
+</html>

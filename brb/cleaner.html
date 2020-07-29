@@ -1,0 +1,37 @@
+<html>
+<body>
+	<h1>Chat cleaner</h1>
+	paste original here:
+	<br>
+	<textarea id="input"></textarea>
+	<br><br>
+	<button id="submit" onClick="clean()">CLEAN DATA</button>
+	<br><br>
+	copy the final output:
+	<br>
+	<textarea id="output"></textarea>
+
+	<script>
+		function clean(){
+			//declarations
+			var chat=document.getElementById("input").value;
+			chat=chat.toLowerCase();
+			message="";
+			finalStr="";
+			//cleaning
+			for(var i=0; i<chat.length; i++){
+				message+=chat[i];
+				if(chat.charCodeAt(i)==10){
+					if(message.search("<media omessi>")== -1 && message.search("https")== -1 && message.search(":")!= -1) //se va bene aggiunge
+						finalStr+=message.substr(18);				
+					message=""; //in ogni caso cancella
+				}
+
+			}
+			//output
+			document.getElementById("output").value=finalStr;
+		}
+	</script>
+	
+</body>
+</html>
