@@ -1,4 +1,12 @@
+
+@font-face {
+  font-family: coolFont;
+  src: url(Gidole-Regular.otf);
+}
+
+
 body{
+	  	font-family: coolFont;
 		background-image:url("../img/sfondo.jpg");
 		color:white;}
 h1{
