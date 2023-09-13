@@ -1,0 +1,203 @@
+body{
+	font-family:"roboto", arial;
+/*	margin: 0px;	*/
+	font-size:14pt;
+	background-image: url("img/background.jpg");
+	background-size: cover;
+
+}
+
+
+#listdx{
+			position:absolute;
+			top:70px;
+			left:80%;
+			width:180px;
+			border-left:1px solid black;
+			position:fixed;
+			}
+li.eldx{
+			list-style-type: none;
+			margin-bottom:5px;}
+a.eldx{
+			text-decoration:none;
+			color:black;}
+li.eldx:hover{
+		font-weight:bold;
+		font-size:16pt;
+}
+
+#here{
+	font-weight:bold;
+	color:#3949ab;
+	font-size:16pt;
+}
+
+p.bottom{
+	color: black;
+	font-size: 14px;
+	text-align: center;
+	}
+
+
+.contenuto{
+	border-top: 50px;
+	width:70%;}
+
+
+
+
+		h1.titolo{
+			padding: 15px 10px 20px 20px;
+			margin-right: 50%;
+			margin-top: 35px;
+			margin-bottom:0;
+			background-color: #3949AB;
+			color:white;
+			font-size:60px;}
+		h2{
+			padding: 10px 10px 10px 30px;
+			margin-right: 30%;
+			margin-top: 60px;
+			background-color: #3949AB;
+			color:white;
+			font-size:30px;}
+
+		h3{
+			padding: 10px 10px 10px 50px;
+			margin-right: 60%;
+			margin-top: 0px;
+			background-color: #1565C0;
+			color:white;
+			font-size:25px;}
+
+
+
+
+
+.img{
+	width:700px;
+	border-style: double;
+	border-color: #1565C0;
+	border-width: 10px;
+	border-radius: 5px;
+	margin-left:150px;}
+figcaption{
+	font-style:italic;
+	color: black;
+	font-size:17px;
+	width: 700px;
+	margin-left:250px;}
+
+
+/*/////////////////////////////////////NavBar/////////////////////////////////*/
+/*/////////////////////////////////NON MODIFICARE/////////////////////////////*/
+
+p.logo{
+	padding-right: 25px;
+	padding-left: 0px;
+	padding-top: 23px;
+	padding-bottom:14px;
+	color: white;
+	display: inline;
+	margin-left:0px;
+	font-size:18pt;
+	font-weight:bold;
+	color: #d1c4e9;
+	//border-right:5px solid white;
+}
+
+li.logo{
+	display: inline;
+}
+
+li.li{
+	padding-right: 30px;
+	padding-left: 30px;
+	padding-top: 24px;
+	padding-bottom:14px;
+	color: white;
+	display: inline;
+	margin-left: 0px;
+	}
+
+li.li:hover{
+
+	background-color: #5C6BC0;
+}
+
+a.li{
+	font-size:20px;
+	color: white;
+	text-decoration: none;
+	padding-bottom:0;
+	padding-top:0;
+}
+
+.menu{
+	z-index:10000px;
+	background-color: #3F51B5;
+	height: 60px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top:0px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+}
+
+
+ /* Dropdown Button */
+.dropbtn {
+	height: 60px;
+	background-color: #3F51B5;
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+	width:175px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	margin-left: 0px;
+
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 140px;
+    box-shadow: 0px 8px 18px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #5C6BC0;
+}
+
+
+
+
+
+
+/*///////////////////////////////////fine menu in alto////////////////////////*/
+/*/////////////////////////////////NON MODIFICARE/////////////////////////////*/
