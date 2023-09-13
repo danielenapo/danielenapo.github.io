@@ -23,6 +23,7 @@
 }
 
 :root {
+    --font-size-micro: 1.4rem;
     --font-size-small: 1.8rem;
     --font-size-normal: 2.2rem;
     --font-size-medium: 2.8rem;
@@ -106,7 +107,7 @@ body {
 }
 
 section {
-    padding: var(--gutter-huge) 0;
+    padding: var(--gutter-medium) 0;
     border-bottom: var(--border-light);
 }
 
@@ -185,6 +186,13 @@ p {
     }
 }
 
+.project-year{
+    color:grey;
+    style: italic;
+    margin: 0 0;
+    font-size: var(--font-size-micro);
+
+}
 /* --------------------------------------- */
 /* ----- Buttons and Links ----- */
 /* --------------------------------------- */
@@ -195,6 +203,7 @@ a {
     font-family: 'Jost', sans-serif;
     transition: all .2s;
     outline: 2px solid transparent;
+    
 }
 
 ::-moz-focus-inner {
@@ -205,6 +214,8 @@ button:focus,
 a:focus {
     outline: 2px solid var(--pink);
 }
+
+
 
 body:not(.user-is-tabbing) button:focus,
 body:not(.user-is-tabbing) a:focus {
@@ -501,6 +512,7 @@ body:not(.user-is-tabbing) a:focus {
 
 .about__photo{
     border-radius: 50%;
+    width: 350px;
 }
 
 @media(min-width: 901px) {
@@ -605,6 +617,7 @@ body:not(.user-is-tabbing) a:focus {
 .footer__social-image {
     height: 4rem;
 }
+
 
 .footer__github-buttons {
     display: flex;
